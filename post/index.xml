@@ -6,21 +6,10 @@
     <description>Recent content in Posts on Ray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Jun 2019 08:52:04 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 08 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://tianhualiang2019.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Spring 应用程序（例子）</title>
-      <link>https://tianhualiang2019.github.io/post/firstblog/</link>
-      <pubDate>Sat, 08 Jun 2019 08:52:04 +0800</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/firstblog/</guid>
-      <description>Spring 应用程序（例子） POM 创建一个工程名为 hello-spring 的项目，pom.xml 文件如下：
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;com.funtl&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hello-spring&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;jar&amp;lt;/packaging&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-context&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.3.17.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; &amp;lt;/project&amp;gt;  核心包：主要增加了 org.springframework: spring-context 依赖
-创建接口与实现 创建 UserService 接口 package com.funtl.hello.spring.service; public interface UserService { public void sayHi(); }  创建 UserServiceImpl 实现 package com.funtl.hello.spring.service.impl; import com.funtl.hello.spring.service.UserService; public class UserServiceImpl implements UserService { public void sayHi() { System.out.println(&amp;quot;Hello Spring&amp;quot;); } }  创建 Spring 配置文件 在 src/main/resources 目录下创建 spring-context.</description>
-    </item>
     
     <item>
       <title>SpringBoot入门</title>
