@@ -77,27 +77,6 @@ Spring框架介绍  首先，我们给框架[framework]给一个定义：**针�
     
     <item>
       <title></title>
-      <link>https://tianhualiang2019.github.io/post/01.junit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/01.junit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
-      <description>JUnit 单元测试 POM pom.xml 文件如下：
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;com.funtl&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hello-spring&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;jar&amp;lt;/packaging&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-context&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.3.17.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; &amp;lt;/project&amp;gt;  主要增加了 junit:junit 依赖
-创建测试类 在测试包下 src/main/test 创建一个名为 MyTest 的测试类，代码如下：
-package com.funtl.hello.spring.test; import org.junit.After; import org.junit.Before; import org.junit.Test; public class MyTest { /** * 执行测试方法前执行 */ @Before public void before() { System.out.println(&amp;quot;执行 before() 方法&amp;quot;); } /** * 执行测试方法后执行 */ @After public void after() { System.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/02.junit-%E6%B3%A8%E8%A7%A3/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/02.junit-%E6%B3%A8%E8%A7%A3/</guid>
-      <description> JUnit 注解    注解 描述     @Test public void method() 测试注释指示该公共无效方法它所附着可以作为一个测试用例。   @Before public void method() Before 注释表示，该方法必须在类中的每个测试之前执行，以便执行测试某些必要的先决条件。   @BeforeClass public static void method() BeforeClass 注释指出这是附着在静态方法必须执行一次并在类的所有测试之前。发生这种情况时一般是测试计算共享配置方法(如连接到数据库)。   @After public void method() After 注释指示，该方法在执行每项测试后执行(如执行每一个测试后重置某些变量，删除临时变量等)   @AfterClass public static void method() 当需要执行所有的测试在 JUnit 测试用例类后执行，AfterClass 注解可以使用以清理建立方法，(从数据库如断开连接)。注意：附有此批注(类似于 BeforeClass)的方法必须定义为静态。   @Ignore public static void method() 当想暂时禁用特定的测试执行可以使用忽略注释。每个被注解为 @Ignore 的方法将不被执行。    </description>
-    </item>
-    
-    <item>
-      <title></title>
       <link>https://tianhualiang2019.github.io/post/03.mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -108,46 +87,6 @@ package com.funtl.hello.spring.test; import org.junit.After; import org.junit.Be
 一对多关系，从职位角度：职位对老师一对多
 多对多关系：查找被教授教导的所有学生（首先职位对老师一对多，老师再对学生再对多、这里便有了一对多对多）
 数据表： 老师表 CREATE TABLE `tb_teacher` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_no` varchar(20) DEFAULT NULL, `t_name` varchar(20) DEFAULT NULL, `position_id` int(11) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8; /*Data for the table `tb_teacher` */ insert into `tb_teacher`(`id`,`t_no`,`t_name`,`position_id`) values (1,&#39;163314001&#39;,&#39;张文远&#39;,1), (2,&#39;163314002&#39;,&#39;赵传智&#39;,1), (3,&#39;163314003&#39;,&#39;风清扬&#39;,2), (4,&#39;163314004&#39;,&#39;王汇智&#39;,2), (5,&#39;163314005&#39;,&#39;汪思远&#39;,3);  学生表 CREATE TABLE `tb_student` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_stu_name` varchar(20) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8; /*Data for the table `tb_student` */ insert into `tb_student`(`id`,`t_stu_name`) values (1,&#39;赵依&#39;), (2,&#39;钱迩&#39;), (3,&#39;张山&#39;), (4,&#39;李石&#39;), (5,&#39;王武&#39;), (6,&#39;马柳&#39;);  职位表 CREATE TABLE `tb_position` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_pos_name` varchar(20) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8; /*Data for the table `tb_position` */ insert into `tb_position`(`id`,`t_pos_name`) values (1,&#39;教授&#39;), (2,&#39;副教授&#39;), (3,&#39;讲师&#39;);  最后是教师学生关系表 CREATE TABLE `tb_stu_teach` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_stu_id` int(11) DEFAULT NULL, `t_teach_id` int(11) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8; /*Data for the table `tb_stu_teach` */ insert into `tb_stu_teach`(`id`,`t_stu_id`,`t_teach_id`) values (1,1,1), (2,1,2), (3,1,3), (4,2,2), (5,2,3), (6,2,4), (7,3,3), (8,3,4), (9,3,5), (10,4,4), (11,4,5), (12,4,1);  最后在eclipse中的目录结构如下： 希望您明白sqlMapConfig该如何配置，以及jdbc.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/03.junit-%E6%96%AD%E8%A8%80/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/03.junit-%E6%96%AD%E8%A8%80/</guid>
-      <description>JUnit 断言 什么是断言 断言是编程术语，表示为一些布尔表达式，程序员相信在程序中的某个特定点该表达式值为真，可以在任何时候启用和禁用断言验证，因此可以在测试时启用断言而在部署时禁用断言。同样，程序投入运行后，最终用户在遇到问题时可以重新启用断言。
-使用断言可以创建更稳定、品质更好且 不易于出错的代码。当需要在一个值为 false 时中断当前操作的话，可以使用断言。单元测试必须使用断言（Junit/JunitX）。
-常用断言方法    断言 描述     void assertEquals([String message], expected value, actual value) 断言两个值相等。值可能是类型有 int, short, long, byte, char or java.lang.Object. 第一个参数是一个可选的字符串消息   void assertTrue([String message], boolean condition) 断言一个条件为真   void assertFalse([String message],boolean condition) 断言一个条件为假   void assertNotNull([String message], java.lang.Object object) 断言一个对象不为空(null)   void assertNull([String message], java.lang.Object object) 断言一个对象为空(null)   void assertSame([String message], java.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/04.log4j-%E7%AE%80%E4%BB%8B/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/04.log4j-%E7%AE%80%E4%BB%8B/</guid>
-      <description>Log4j Log4j 日志级别 为了方便对于日志信息的输出显示，对日志内容进行了分级管理。日志级别由高到低，共分 6 个级别： - fatal(致命的) - error - warn - info - debug - trace(堆栈)
-Log4j 日志输出控制文件 日志输出简介 Log4j 的日志输出控制文件，主要由三个部分构成： - 日志信息的输出位置：控制日志信息将要输出的位置，是控制台还是文件等。 - 日志信息的输出格式：控制日志信息的显示格式，即以怎样的字符串形式显示。 - 日志信息的输出级别：控制日志信息的显示内容，即显示哪些级别的日志信息。
-有了日志输出控制文件，代码中只要设置好日志信息内容及其级别即可，通过控制文件便可控制这些日志信息的输出了。
-日志属性配置文件 日志属性文件 log4j.properties 是专门用于控制日志输出的。其主要进行三方面控制：
- 输出位置：控制日志将要输出的位置，是控制台还是文件等。 输出布局：控制日志信息的显示形式。 输出级别：控制要输出的日志级别。  日志属性文件由两个对象组成：日志附加器与根日志。
-根日志，即为 Java 代码中的日志记录器，其主要由两个属性构成：日志输出级别与日志附加器。
-日志附加器，则由日志输出位置定义，由其它很多属性进行修饰，如输出布局、文件位置、文件大小等。
-什么是日志附加器？ 所谓日志附加器，就是为日志记录器附加上很多其它设置信息。附加器的本质是一个接口，其定义语法为： log4j.appender.appenderName = 输出位置
-常用的附加器实现类  org.apache.log4j.ConsoleAppender：日志输出到控制台 org.apache.log4j.FileAppender：日志输出到文件 org.apache.log4j.RollingFileAppender：当日志文件大小到达指定尺寸的时候将产生一个新的日志文件 org.apache.log4j.DailyRollingFileAppender：每天产生一个日志文件  常用布局类型  org.apache.log4j.HTMLLayout：网页布局，以 HTML 表格形式布局 org.apache.log4j.SimpleLayout：简单布局，包含日志信息的级别和信息字符串 org.apache.log4j.PatternLayout：匹配器布局，可以灵活地指定布局模式。其主要是通过设置 PatternLayout 的 ConversionPattern 属性值来控制具体输出格式的 。  打印参数: Log4J 采用类似 C 语言中的 printf 函数的打印格式格式化日志信息</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/05.log4j-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/05.log4j-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/</guid>
-      <description>Log4j 日志文件 Slf4j 简介 slf4j 的全称是 Simple Loging Facade For Java，即它仅仅是一个为 Java 程序提供日志输出的统一接口，并不是一个具体的日志实现方案，就比如 JDBC 一样，只是一种规则而已。所以单独的 slf4j 是不能工作的，必须搭配其他具体的日志实现方案，比如 apache 的 org.apache.log4j.Logger，JDK 自带的 java.util.logging.Logger 以及 log4j 等。
-POM 继续之前的项目，pom.xml 配置如下：
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;com.funtl&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hello-spring&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;jar&amp;lt;/packaging&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-context&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.3.17.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.slf4j&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;slf4j-log4j12&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.7.25&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; &amp;lt;/project&amp;gt;  主要增加了 org.slf4j:slf4j-log4j12 依赖
-创建 log4j.properties 配置文件 在 src/main/resources 目录下创建名为 log4j.</description>
     </item>
     
     <item>
