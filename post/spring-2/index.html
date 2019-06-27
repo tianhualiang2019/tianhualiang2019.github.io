@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Spring框架中AOP的学习和使用-掌握AOP(二) // Ray的个人博客</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Ray" />
+    <meta name="description" content="java开发必备技能，掌握spring框架的使用技巧，理解spring框架的核心，在理解依赖注入的基础上、掌握面向切面编程思想和技术，学会使用xml或注解的配置，单元测试等" />
+    <link rel="stylesheet" href="https://tianhualiang2019.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring框架中AOP的学习和使用-掌握AOP(二)"/>
+<meta name="twitter:description" content="java开发必备技能，掌握spring框架的使用技巧，理解spring框架的核心，在理解依赖注入的基础上、掌握面向切面编程思想和技术，学会使用xml或注解的配置，单元测试等"/>
+
+    <meta property="og:title" content="Spring框架中AOP的学习和使用-掌握AOP(二)" />
+<meta property="og:description" content="java开发必备技能，掌握spring框架的使用技巧，理解spring框架的核心，在理解依赖注入的基础上、掌握面向切面编程思想和技术，学会使用xml或注解的配置，单元测试等" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tianhualiang2019.github.io/post/spring-2/" />
+<meta property="article:published_time" content="2018-01-09T19:23:18&#43;00:00"/>
+<meta property="article:modified_time" content="2018-01-09T19:23:18&#43;00:00"/>
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://tianhualiang2019.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="Ray" /></a>
+      <h1>Ray的个人博客</h1>
+      <p>Do you want to spend the rest of your life selling sugared water or do you want a chance to change the world?</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/tianhualiang2019"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://gitee.com/ray_thl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://goldenaarcher.github.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="http://wvincen.gitee.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Spring框架中AOP的学习和使用-掌握AOP(二)</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 9, 2018
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          6 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="spring框架">Spring框架</h1>
+
+<blockquote>
+<p>本课程旨在让你掌握spring框架的核心思想，理解如何使用spring,明白依赖注入、面向切面编程、申明式事务的机制和使用方式，通过本系列课程的学习，能够胜任在开发中使用spring框架，能够很好地应用框架进行coding工作。同时，也为后绪的spring MVC学习打好坚实的知识基础和技术基础。本课程主要包含如下几个知识点</p>
+</blockquote>
+
+<ul>
+<li>Spring框架的核心架构以及对Bean的管理</li>
+<li>依赖注入</li>
+<li>面向切面编程</li>
+<li>xml配置和流行的注解配置</li>
+<li>申明式事务的配置</li>
+<li>与持久层的集成[本例采用Hibernate框架，如想要学习与mybatis的集成，请看mybatis系列文章之四和五]</li>
+</ul>
+
+<p>另外，本系列教程中的所有案例代码，都是基于maven进行管理的</p>
+
+<hr />
+
+<!-- more -->
+
+<h2 id="aop简介">AOP简介</h2>
+
+<blockquote>
+<ol>
+<li>AOP(Aspect-Oriented Programming, 面向切面编程): 是一种新的方法论, 是对传统 OOP(Object-Oriented Programming, 面向对象编程) 的补充.</li>
+<li>AOP 的主要编程对象是切面(aspect), 而切面是模块化的横切关注点.</li>
+<li>在应用 AOP 编程时, 仍然需要定义公共功能, 但可以明确的定义这个功能在哪里, 以什么方式应用, 并且不必修改受影响的类. 这样一来横切关注点就被模块化到特殊的对象(切面)里.</li>
+<li>AOP 的好处:
+&gt; 4-1. 每个事物逻辑位于一个位置, 代码不分散, 便于维护和升级
+&gt; 4-2. 业务模块更简洁, 只包含核心业务代码.</li>
+</ol>
+</blockquote>
+
+<h2 id="先来看一个需求">先来看一个需求</h2>
+
+<p>下面是分别定义了一个接口和它的实现类，功能非常简单，实现正整数的加、减、乘、除操作，代码如下：
+<strong>CalculateService.java</strong></p>
+
+<pre><code class="language-java">package com.springdemo.service;
+
+/**
+ * Created by yejf on 2018/1/12.
+ */
+public interface CalculateService {
+
+    int add(int a, int b);
+
+    int subtract(int a, int b);
+
+    int times(int a, int b);
+
+    int divide(int a, int b);
+}
+</code></pre>
+
+<p><strong>CalculateServiceImpl.java</strong></p>
+
+<pre><code class="language-java">package com.springdemo.service.impl;
+
+import com.springdemo.service.CalculateService;
+import org.springframework.stereotype.Component;
+
+/**
+ * Created by yejf on 2018/1/12.
+ */
+@Component
+public class CalculateServiceImpl implements CalculateService {
+
+    @Override
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    @Override
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    @Override
+    public int times(int a, int b) {
+        return a * b;
+    }
+
+    @Override
+    public int divide(int a, int b) {
+        return a / b;
+    }
+}
+</code></pre>
+
+<p>由于它需要被Spring容器管理，所以，打上了 <code>@Component</code>注解.</p>
+
+<p>我们的额外需求是：
+&gt;需求1-做日志：在程序执行期间追踪正在发生的活动
+&gt;需求2-做验证：希望计算器只能处理正数的运算</p>
+
+<p><strong>如果我们采用传统的方式，只能在每个方法里面先做参数的验证，然后再进行日志记录，这样不仅代码   ,冗余，而且不利于后期的维护,每个方法在处理核心逻辑的同时还必须兼顾其他多个关注点.</strong></p>
+
+<blockquote>
+<p>以日志需求为例, 只是为了满足这个单一需求, 就不得不在多个模块（方法）里多次重复相同的日志代码. 如果日志需求发生变化, 必须修改所有模块.</p>
+</blockquote>
+
+<p>类似于这样：</p>
+
+<pre><code class="language-java">@Component
+public class CalculateServiceImpl implements CalculateService {
+
+	private static final Logger LOGGER = Logger.getLogger(CalculateServiceImpl.class);
+
+    @Override
+    public int add(int a, int b) {
+    	//先进行参数有效性的验证
+    	if(a &lt; 0 || b &lt; 0) {
+            System.out.println(&quot;参与计算的两个整数有一个为负数: &quot;+a+&quot;,&quot;+b);
+            return -1;
+        }
+        //做日志
+        LOGGER.debug(&quot;add操作之前日志...&quot;);
+        //计算
+        int c = a + b;
+        LOGGER.debug(&quot;add操作之后日志...&quot;);
+   		//返回
+        return c;
+    }
+    //....
+}
+</code></pre>
+
+<p>可以看出，在add方法中插入了验证和日志的功能，但是，此方法的核心只是做加法操作，我们在业务实现时还要考虑一些共性的东西，这显然是不好的一种方式，那如何在不改变业务类实现的基础上，动态添加验证、日志功能呢？</p>
+
+<p>一种比较好的方式是：**使用动态代理解决上述问题 **
+代理设计模式的原理:
+&gt; 使用一个代理将对象包装起来, 然后用该代理对象取代原始对象.<br />
+&gt; 任何对原始对象的调用都要通过代理. 代理对象决定是否以及何时将方法调用转到原始对象上.<br />
+&gt; 关于使用程序编写动态代理代码,自己可以去查看相关文档, 我们这里不做介绍.<br />
+实际上，Spring 中的AOP就是基于动态代理技术来实现的，下面我们来详细讲解AOP。</p>
+
+<h2 id="aop图示">AOP图示</h2>
+
+<blockquote>
+<p>我们把上面的需求以图的方式呈现出来，可以清晰地看到共性的操作，把共性的地方抽取出来，模块化成<code>切面</code>，然后让这个切面按我们的预期进行工作，这就是AOP的作用。
+<img src="assets/aop3.png" alt="图示" /></p>
+</blockquote>
+
+<p>上面的图示中，我们抽取出来共性，也就是验证和日志功能，但是，光有这个共性，还是不能够模块化成切面的，它还需要其它的辅助元素才能成为一个切面，下面我们就来看看有哪些元素才能完美地组织起一个切面。</p>
+
+<h2 id="aop术语">AOP术语</h2>
+
+<blockquote>
+<p>** Aspect = Advice + PointCut **
+从上面的定义可以看出，切面由Advice和PointCut组成，那什么又是Advice和PointCut呢？</p>
+
+<p>Advice(通知)-切面必须要完成的工作[从多个组件中抽出的与核心业务逻辑无关的共性代码]也就是切面中要执行的内容，定义了这个切面要做什么？比如：日志、验证、事务等</p>
+
+<p>PointCut, 就是定义哪些目标方法要加切面，也就是规定了哪些方法的调用会经过切面，当这些目标方法被调用时，才会触发切面的Advice代码被执行，为了进一步细化这个操作，目标方法调用时的切入点又可以细分为：
+&gt; 调用之前
+&gt; 调用之后
+&gt; 出现异常
+&gt; 返回之后
+&gt; 环绕， 上面4种的综合体,最强大的一个连接点
+5种连接点，而这个连接点就叫 <code>JoinPoint</code></p>
+
+<p>JoinPoint(连接点)，意思很明显，就是当目标方法执行时，何时执行切面的代码。</p>
+</blockquote>
+
+<p>所以，我们可以这么理解：
+Advice 定义了切面要做什么 【what】
+PointCut,定义切面在哪些目标方法上有效  【Where】
+JoinPoint, 定义了切面在目标方法的执行何时有效 【When】</p>
+
+<blockquote>
+<p>Weave(织入) -另外，Spring 容器在切面元素准备好后，还有一个织入的过程，这个叫 Weave(织入), 也就是容器应用切面的过程，一般无需我们参与。</p>
+</blockquote>
+
+<p>以上这5个概念是构建整个AOP的基础，必需要理解。</p>
+
+<h3 id="注意事项">注意事项</h3>
+
+<p><strong>注意:Spring目前只支持部分的AspectJ形式的Joinpoint的定义，同时Spring AOP只支持方法级别的JoinPoint</strong></p>
+
+<p>针对这5种连接点，可以通过如下图示来加强理解
+&gt; 图示1:
+<img src="assets/aop4.png" alt="alt text" />
+&gt; 图示2:
+<img src="assets/aop.png" alt="alt text" /></p>
+
+<h3 id="在spring-中启用-aspectj-注解支持">在Spring 中启用 AspectJ 注解支持</h3>
+
+<blockquote>
+<p>AspectJ:Java 社区里最完整最流行的 AOP 框架, Spring已集成AspectJ<br />
+在 Spring2.0 以上版本中, 可以使用基于 AspectJ的注解或基于 XML 配置的 AOP</p>
+</blockquote>
+
+<p>下面是xml的配置</p>
+
+<pre><code class="language-xml">&lt;!-- 
+	通过配置织入@Aspectj切面 
+	虽然可以通过编程的方式织入切面，但是一般情况下，我们还是使用spring的配置自动完成创建代理织入切面的工作。 
+	通过aop命名空间的&lt;aop:aspectj-autoproxy/&gt;声明自动为spring容器中那些配置@aspectJ切面的bean创建代理，织入切面。当然，spring
+	在内部依旧采用AnnotationAwareAspectJAutoProxyCreator进行自动代理的创建工作，但具体实现的细节已经被&lt;aop:aspectj-autoproxy 
+	/&gt;隐藏起来了 
+	&lt;aop:aspectj-autoproxy/&gt;有一个proxy-target-class属性，默认为false，表示使用jdk动态代理织入增强，当配为&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot;/&gt;时，表示使用CGLib动态代理技术织入增强。不过即使proxy-target-class设置为false，如果目标类没有声明接口，则spring将自动使用CGLib动态代理。
+ --&gt;
+ &lt;aop:aspectj-autoproxy /&gt; 
+</code></pre>
+
+<p>如果是使用注解配置，使用</p>
+
+<pre><code class="language-java">@Configuration
+@ComponentScan({&quot;com.springdemo.service&quot;,&quot;com.springdemo.advice&quot;})
+@EnableAspectJAutoProxy //启动AOP自动代理
+public class AopConfig {
+	//...
+}
+</code></pre>
+
+<p>建议是使用注解的方式来使用AOP，我们在本案例中的代码都是采用注解方式进行的。下面我们详细介绍一个这些注解类型。</p>
+
+<h2 id="aop-注解详解">AOP 注解详解</h2>
+
+<p>先来看看AspectJ提供的注解：
+- @org.aspectj.lang.annotation.Aspect 用来修改Advice类型
+- @org.aspectj.lang.annotation.Pointcut 用来定义切入点
+- @org.aspectj.lang.annotation.Before   连接点之一，方法调用之前
+- @org.aspectj.lang.annotation.After    连接点之一，方法调用之后
+- @org.aspectj.lang.annotation.AfterReturning  连接点之一，方法返回后
+- @org.aspectj.lang.annotation.AfterThrowing 连接点之一，方法出现异常后
+- @org.aspectj.lang.annotation.Around  连接点之一，环绕方法</p>
+
+<p>由于Advice也是一种Bean对象，也要被Spring DI容器所管理，所以，同样需要 @Component 注解
+- @org.springframework.stereotype.Component  纳入DI管理之中
+- @org.springframework.core.annotation.Order  指定切面的优先级</p>
+
+<h3 id="用-aspectj-注解声明切面">用 AspectJ 注解声明切面</h3>
+
+<blockquote>
+<p>非常简单,只需要把这个类型使用 <code>@Component</code>和<code>@Aspect</code> 来修饰这个类型即可</p>
+</blockquote>
+
+<p>我们来看一下案例如下：</p>
+
+<pre><code class="language-java">package com.springdemo.advice;
+
+import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+/**
+ * Created by yejf on 2018/1/12.
+ * 用来做为日志切面的内容，也就是要执行的代码
+ */
+@Order(2)
+@Component  //要被DI容器所管理
+@Aspect  //aspect = advice + pointcut[多个joinpoint]
+public class LogAdvice {
+	//...
+｝
+</code></pre>
+
+<h3 id="pointcut切入点表达式">PointCut切入点表达式</h3>
+
+<ol>
+<li><p>利用方法签名编写AspectJ切入点表达式</p></li>
+
+<li><p>最典型的切入点表达式时根据方法的签名来匹配各种方法：</p></li>
+</ol>
+
+<p>　　　　2-1. execution * com.yl.spring.aop.ArithmeticCalculator.*(..):匹配ArithmeticCalculator中声明的所有方法，<br>
+               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 第一个*代表任意修饰符及任意返回值，第二个*代表任意方法，..匹配任意数量的参数。若目标类与接口与切面在同一个包中，可以省略包名。</p>
+
+<p>　　　　2-2. execution public * ArithmeticCalculator.*(..):匹配ArithmeticCalculator接口的所有公有方法</p>
+
+<p>　　　　2-3. execution public double ArithmeticCalculator.*(..):匹配ArithmeticCalculator中返回double类型数值的方法</p>
+
+<p>　　　　2-4. execution public double ArithmeticCalculator.*(double, ..):匹配第一个参数为double类型的方法，..匹配任意数量任意类型的参数</p>
+
+<p>　　　　2-5. execution public double ArithmeticCalculator.*(double, double):匹配参数类型为double，double类型的方法</p>
+
+<h3 id="重用切入点定义">重用切入点定义</h3>
+
+<ol>
+<li><p>在编写 AspectJ 切面时, 可以直接在通知注解中书写切入点表达式. 但同一个切点表达式可能会在多个通知中重复出现.</p></li>
+
+<li><p>在 AspectJ 切面中, 可以通过 @Pointcut 注解将一个切入点声明成简单的方法. 切入点的方法体通常是空的, 因为将切入点定义与应用程序逻辑混在一起是不合理的.</p></li>
+
+<li><p>切入点方法的访问控制符同时也控制着这个切入点的可见性. 如果切入点要在多个切面中共用, 最好将它们集中在一个公共的类中. 在这种情况下, 它们必须被声明为 public. 在引入这个切入点时, 必须将类名也包括在内. 如果类没有与这个切面放在同一个包中, 还必须包含包名.</p></li>
+
+<li><p>其他通知可以通过方法名称引入该切入点.</p></li>
+</ol>
+
+<h3 id="重用切入点实例">重用切入点实例</h3>
+
+<p><code>LogAdvice.java</code></p>
+
+<pre><code class="language-java">package com.springdemo.advice;
+
+import org.apache.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+
+/**
+ * Created by yejf on 2018/1/12.
+ * 用来做为日志切面的内容，也就是要执行的代码
+ */
+@Order(2)
+@Component  //要被DI容器所管理
+@Aspect  //aspect = advice + pointcut[多个joinpoint]
+public class LogAdvice {
+
+    private static final Logger LOGGER = Logger.getLogger(LogAdvice.class);
+
+    @Pointcut(value = &quot;execution(public int com.springdemo.service.impl.CalculateServiceImpl.*(..))&quot;)
+    public void declarationPointCut() {
+        // nothing to do
+
+    }
+
+    @Before(value = &quot;declarationPointCut()&quot;)
+    public void beforeMethod(JoinPoint point) {
+        LOGGER.debug(&quot;日志切面 -&gt; 开始介入....&quot;);
+        LOGGER.debug(&quot;本次要调用的目标对象:&quot;+point.getTarget());
+        LOGGER.debug(&quot;本次要调用的目标方法名：&quot;+point.getSignature().getName());
+        LOGGER.debug(&quot;本次要调用的目标方法参数值：&quot;+ Arrays.toString(point.getArgs()));
+    }
+
+    @After(value = &quot;declarationPointCut()&quot;)
+    public void afterMethod() {
+        LOGGER.debug(&quot;日志切面 -&gt; 方法执行结束...&quot;);
+    }
+
+    @AfterReturning(value = &quot;declarationPointCut()&quot;, returning = &quot;obj&quot;)
+    public void afterReturn(Object obj) {
+        LOGGER.debug(&quot;日志切面 -&gt; 目标方法返回后, 返回对象结果是：&quot;+obj);
+    }
+}
+</code></pre>
+
+<h2 id="advice">Advice</h2>
+
+<blockquote>
+<p>切面要执行的代码所在类型</p>
+</blockquote>
+
+<h3 id="前置通知">前置通知</h3>
+
+<ol>
+<li>前置通知:在方法执行之前执行的通知</li>
+<li>前置通知使用 @Before 注解, 并将切入点表达式的值作为注解值
+代码请看<code>LogAdvice.java</code></li>
+</ol>
+
+<h3 id="后置通知">后置通知</h3>
+
+<ol>
+<li>后置通知是在连接点完成之后执行的, 即连接点返回结果或者抛出异常的时候, 下面的后置通知记录了方法的终止.</li>
+<li>一个切面可以包括一个或者多个通知.</li>
+</ol>
+
+<pre><code class="language-java">/**
+ * 后置通知:在目标方法执行后(无论是否发生异常),执行的通知.
+ * 在后置通知中还不能访问目标方法执行的结果.
+ */
+@After(&quot;execution(public int com.springdemo.service.impl.CalculateServiceImpl.*(..))&quot;)
+public void afterMethod(JoinPoint joinPoint){
+	String method = joinPoint.getSignature().getName();
+	List&lt;Object&gt; args = Arrays.asList(joinPoint.getArgs());
+	System.out.println(&quot;The method &quot;+method+&quot; ends with &quot;+args);
+}
+</code></pre>
+
+<h3 id="返回通知">返回通知</h3>
+
+<blockquote>
+<p>无论连接点是正常返回还是抛出异常, 后置通知都会执行. 如果只想在连接点返回的时候记录日志, 应使用返回通知代替后置通知.</p>
+</blockquote>
+
+<pre><code class="language-java">/**
+ * 返回通知在方法返回结果之后执行
+ * 返回通知是可以访问方法的返回值的.
+ * 在返回通知中, 只要将 returning 属性添加到 @AfterReturning 注解中, 就可以访问连接点的返回值. 该属性的值即为用来传入返回值的参数名称. 
+ * 必须在通知方法的签名中添加一个同名参数. 在运行时, Spring AOP 会通过这个参数传递返回值.
+ * 原始的切点表达式需要出现在 pointcut 属性中
+ */
+@AfterReturning(value=&quot;execution(public int com.springdemo.service.impl.*.*(..))&quot;,
+		returning=&quot;result&quot;)
+public void afterRurning(JoinPoint joinPoint,Object result){
+	String method = joinPoint.getSignature().getName();
+	List&lt;Object&gt; args = Arrays.asList(joinPoint.getArgs());
+	System.out.println(&quot;The method &quot;+method+&quot; afterRurning with &quot;+args+&quot;,结果是:&quot;+result);
+}
+</code></pre>
+
+<h3 id="异常通知">异常通知</h3>
+
+<ol>
+<li>只在连接点抛出异常时才执行异常通知</li>
+<li>将 throwing 属性添加到 @AfterThrowing 注解中, 也可以访问连接点抛出的异常.
+Throwable 是所有错误和异常类的超类. 所以在异常通知方法可以捕获到任何错误和异常.</li>
+<li>如果只对某种特殊的异常类型感兴趣, 可以将参数声明为其他异常的参数类型. 然后通知就只在抛出这个类型及其子类的异常时才被执行.</li>
+</ol>
+
+<pre><code class="language-java">/**
+ * 异常通知，在方法抛出异常之后
+ * @param joinPoint
+ * @param ex
+ * 注意:在目标方法出现异常时会执行代码.
+ * 可以访问到异常对象,且可以指定在出现特定异常时再执行通知代码.
+ * 比如Excpetion ex写成NullPointException ex的话,就只有当程序
+ * 出现空指针异常的话,才会执行.
+ */
+@AfterThrowing(value=&quot;execution(public int com.springdemo.service.impl.*.*(..))&quot;,throwing=&quot;ex&quot;)
+public void afterThrowing(JoinPoint joinPoint,Exception ex){
+	String method = joinPoint.getSignature().getName();
+	List&lt;Object&gt; args = Arrays.asList(joinPoint.getArgs());
+	System.out.println(&quot;The method &quot;+method+&quot; afterThrowing with &quot;+args+&quot;,异常是:&quot;+ex);
+}
+</code></pre>
+
+<h3 id="环绕通知">环绕通知</h3>
+
+<ol>
+<li>环绕通知是所有通知类型中功能最为强大的, 能够全面地控制连接点. 甚至可以控制是否执行连接点.</li>
+<li>对于环绕通知来说, 连接点的参数类型必须是 ProceedingJoinPoint . 它是 JoinPoint 的子接口, 允许控制何时执行, 是否执行连接点.</li>
+<li>在环绕通知中需要明确调用 ProceedingJoinPoint 的 proceed() 方法来执行被代理的方法. 如果忘记这样做就会导致通知被执行了, 但目标方法没有被执行.</li>
+<li>注意: 环绕通知的方法需要返回目标方法执行之后的结果, 即调用 joinPoint.proceed(); 的返回值, 否则会出现空指针异常</li>
+</ol>
+
+<pre><code class="language-java">/***********
+ * 环绕通知,需要携带ProceedingJoinPoint类型的参数
+ * 环绕通知类似于动态代理的全过程:ProceedingJoinPoint这个类型的参数可以决定是否执行目标方法
+ * 且环绕通知必须要有返回值,返回值即为目标方法的返回值.
+ */
+@Around(&quot;execution(public int com.springdemo.service.impl.*.*(..))&quot;)
+public Object aroundMethod(ProceedingJoinPoint pjd){
+	Object result= null;
+	
+	//目标方法的名称
+	String methodName = pjd.getSignature().getName();
+	
+	//执行目标方法
+	try {
+		//前置通知
+		System.out.println(&quot;==The method &quot;+methodName+&quot; begin with &quot;+Arrays.asList(pjd.getArgs()));
+		result = pjd.proceed();
+		//返回通知
+		System.out.println(&quot;==The method &quot;+methodName+&quot; ends with &quot;+result);
+	} catch (Throwable e) {
+		//异常通知
+		System.out.println(&quot;==The method occurs exception:&quot;+e);
+		throw new RuntimeException(e);
+	}
+	//后置通知
+	System.out.println(&quot;==The method &quot;+methodName+&quot; ends&quot;);
+	return result;
+}
+</code></pre>
+
+<h3 id="指定切面的优先级">指定切面的优先级</h3>
+
+<ol>
+<li>在同一个连接点上应用不止一个切面时, 除非明确指定, 否则它们的优先级是不确定的.</li>
+<li>切面的优先级可以通过实现 Ordered 接口或利用 @Order 注解指定.</li>
+<li>实现 Ordered 接口, getOrder() 方法的返回值越小, 优先级越高.</li>
+<li>若使用 @Order 注解, 序号出现在注解中</li>
+</ol>
+
+<pre><code class="language-java">//使用@Order来指明切面的优先级,值越小,优先级越高
+@Order(2)
+//把这个类声明为一个切面;需要把该类放入到IOC容器中,再声明为一个切面
+@Aspect
+@Component
+public class LogAdvice {
+	//...
+}
+
+@Order(3)
+@Component
+@Aspect
+public class ValidationAdvice {
+	//..
+}
+</code></pre>
+
+<h2 id="基于xml的aop配置">基于XML的AOP配置</h2>
+
+<blockquote>
+<p>这个配置是早期的使用方式，现阶段建议使用注解方式。</p>
+</blockquote>
+
+<h3 id="用基于-xml-的配置声明切面">用基于 XML 的配置声明切面</h3>
+
+<ol>
+<li>除了使用 AspectJ 注解声明切面, Spring 也支持在 Bean 配置文件中声明切面. 这种声明是通过 aop schema 中的 XML 元素完成的.</li>
+<li>正常情况下, 基于注解的声明要优先于基于 XML 的声明. 通过 AspectJ 注解, 切面可以与 AspectJ 兼容, 而基于 XML 的配置则是 Spring 专有的. 由于 AspectJ 得到越来越多的 AOP 框架支持, 所以以注解风格编写的切面将会有更多重用的机会.</li>
+<li>当使用 XML 声明切面时, 需要在 <beans> 根元素中导入 aop Schema</li>
+<li>在 Bean 配置文件中, 所有的 Spring AOP 配置都必须定义在 <a href="aop:config">aop:config</a> 元素内部. 对于每个切面而言, 都要创建一个<a href="aop:aspect">aop:aspect</a> 元素来为具体的切面实现引用后端 Bean 实例.</li>
+<li>切面 Bean 必须有一个标示符, 供 <a href="aop:aspect">aop:aspect</a> 元素引用</li>
+</ol>
+
+<p>声明切面的实际代码:</p>
+
+<pre><code class="language-xml">&lt;!-- 配置切面bean --&gt;
+&lt;bean id=&quot;loggingAspect&quot; class=&quot;com.spring.aop.LoggingAspect&quot;&gt;&lt;/bean&gt; 
+
+&lt;!-- 配置切面bean --&gt;
+ &lt;bean id=&quot;validationAspect&quot; class=&quot;com.spring.aop.ValidationAspect&quot;&gt;&lt;/bean&gt;
+ &lt;!-- 配置AOP --&gt;
+&lt;aop:config&gt;
+	&lt;!-- 配置切面通知 --&gt;
+	&lt;aop:aspect id=&quot;ValidationAspect&quot; ref=&quot;validationAspect&quot; order=&quot;1&quot;&gt;
+		
+	&lt;/aop:aspect&gt; 
+	
+	&lt;aop:aspect id=&quot;LoggingAspect&quot; ref=&quot;loggingAspect&quot; order=&quot;2&quot;&gt;
+		
+	&lt;/aop:aspect&gt; 
+&lt;/aop:config&gt; 
+</code></pre>
+
+<h3 id="声明切入点的示例代码">声明切入点的示例代码</h3>
+
+<pre><code class="language-xml">&lt;aop:config&gt;
+	&lt;!-- 配置切点表达式 -&gt;也是可以写在aop:aspect标签内部的--&gt;
+	&lt;!-- 定义切点 --&gt;
+	&lt;aop:pointcut expression=&quot;execution(* com.spring.dao.impl.*.*(..))&quot; id=&quot;mycut&quot;/&gt;
+	&lt;!-- 配置切面通知 --&gt;
+	&lt;aop:aspect id=&quot;ValidationAspect&quot; ref=&quot;validationAspect&quot; order=&quot;1&quot;&gt;
+		
+	&lt;/aop:aspect&gt; 
+	
+	&lt;aop:aspect id=&quot;LoggingAspect&quot; ref=&quot;loggingAspect&quot; order=&quot;2&quot;&gt;
+		
+	&lt;/aop:aspect&gt; 
+&lt;/aop:config&gt; 
+</code></pre>
+
+<h3 id="基于-xml-声明通知">基于 XML &mdash;- 声明通知</h3>
+
+<ol>
+<li>在 aop Schema 中, 每种通知类型都对应一个特定的 XML 元素.</li>
+<li>通知元素需要使用 <pointcut-ref> 来引用切入点, 或用 <pointcut> 直接嵌入切入点表达式.  method 属性指定切面类中通知方法的名称.</li>
+</ol>
+
+<p>实例代码:</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd&quot;&gt;
+    &lt;bean id=&quot;calculateService&quot; class=&quot;com.springdemo.service.impl.CalculateServiceImpl&quot;/&gt;
+    &lt;!-- Advice也是一种Bean资源 --&gt;
+    &lt;bean id=&quot;logAdvice&quot; class=&quot;com.springdemo.advice.LogAdvice&quot;&gt;&lt;/bean&gt;
+    &lt;bean id=&quot;validationAdvice&quot; class=&quot;com.springdemo.advice.ValidationAdvice&quot;&gt;&lt;/bean&gt;
+    &lt;!-- 配置AOP --&gt;
+    &lt;aop:config&gt;
+        &lt;!-- 配置pointcut --&gt;
+        &lt;aop:pointcut id=&quot;log_pc&quot; expression=&quot;execution(public * com.springdemo.service.impl.CalculateServiceImpl.*(..))&quot;&gt;&lt;/aop:pointcut&gt;
+        &lt;!-- 在aspect 中配置具体的连接点[针对 LogAdvice ] --&gt;
+        &lt;aop:aspect id=&quot;logAdviceAspect&quot; ref=&quot;logAdvice&quot; order=&quot;1&quot;&gt;
+            &lt;aop:before method=&quot;beforeMethod&quot; pointcut-ref=&quot;log_pc&quot;/&gt;
+            &lt;aop:after method=&quot;afterMethod&quot; pointcut-ref=&quot;log_pc&quot;/&gt;
+            &lt;aop:after-returning method=&quot;afterReturn&quot; pointcut-ref=&quot;log_pc&quot; returning=&quot;obj&quot;/&gt;
+        &lt;/aop:aspect&gt;
+        &lt;!-- 在aspect 中配置具体的连接点[针对 ValidationAdvice ] --&gt;
+        &lt;aop:aspect id=&quot;validationAdviceAspect&quot; ref=&quot;validationAdvice&quot; order=&quot;2&quot;&gt;
+            &lt;aop:around method=&quot;aroundMethod&quot; pointcut-ref=&quot;log_pc&quot;/&gt;
+        &lt;/aop:aspect&gt;
+    &lt;/aop:config&gt;
+&lt;/beans&gt;
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

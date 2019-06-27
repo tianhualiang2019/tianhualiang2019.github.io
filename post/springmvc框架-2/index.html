@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title> // Ray的个人博客</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Ray" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://tianhualiang2019.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="SpringMVC框架 项目搭建流程  详见昨天笔记
+ 请求参数传递及编码问题  SpringMVC框架可以丰常方便地接收用户的请求参数，而且也可以帮助我们自动封装成相应的对象
+ SpringMVC支持如下方式来获取用户的请求参数  直接在方法中，添加相关的实体类对象[PO, pojo]或是值对象[VO, Value Object]【比较常用】  //示例代码
+@Controller public class UserController { @RequestMapping(&quot;/user/register&quot;) /***************** * 此处要求，页面表单项中的name属性值要和User对象的属性名保持一致，这个是约定 */ public String register(User user,Model model) { //...再做进一步的业务处理 } }   直接在方法中，添加单个表单项的参数【比较常用】  //示例代码
+@Controller public class UserController { @RequestMapping(&quot;/user/register&quot;) /***************** * 如果请求参数的名字与方法中的参数名不一样，我们有两种做法： * 1. 修改方法中的参数名与页面表单项中的name属性值一样 * 2. 使用 @RequestParam 注解来修饰方法参数，使得名字与页面表单项中的name属性值一样 */ public String login(String username, String pwd, Model model) { //...再做进一步的业务处理 } }   传统的代码，也就是原生的Servlet代码 【不可取，不建议使用】  //示例代码"/>
+
+    <meta property="og:title" content="" />
+<meta property="og:description" content="SpringMVC框架 项目搭建流程  详见昨天笔记
+ 请求参数传递及编码问题  SpringMVC框架可以丰常方便地接收用户的请求参数，而且也可以帮助我们自动封装成相应的对象
+ SpringMVC支持如下方式来获取用户的请求参数  直接在方法中，添加相关的实体类对象[PO, pojo]或是值对象[VO, Value Object]【比较常用】  //示例代码
+@Controller public class UserController { @RequestMapping(&quot;/user/register&quot;) /***************** * 此处要求，页面表单项中的name属性值要和User对象的属性名保持一致，这个是约定 */ public String register(User user,Model model) { //...再做进一步的业务处理 } }   直接在方法中，添加单个表单项的参数【比较常用】  //示例代码
+@Controller public class UserController { @RequestMapping(&quot;/user/register&quot;) /***************** * 如果请求参数的名字与方法中的参数名不一样，我们有两种做法： * 1. 修改方法中的参数名与页面表单项中的name属性值一样 * 2. 使用 @RequestParam 注解来修饰方法参数，使得名字与页面表单项中的name属性值一样 */ public String login(String username, String pwd, Model model) { //...再做进一步的业务处理 } }   传统的代码，也就是原生的Servlet代码 【不可取，不建议使用】  //示例代码" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-2/" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://tianhualiang2019.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="Ray" /></a>
+      <h1>Ray的个人博客</h1>
+      <p>Do you want to spend the rest of your life selling sugared water or do you want a chance to change the world?</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/tianhualiang2019"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://gitee.com/ray_thl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://goldenaarcher.github.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="http://wvincen.gitee.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title"></h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 1, 0001
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="springmvc框架">SpringMVC框架</h1>
+
+<h2 id="项目搭建流程">项目搭建流程</h2>
+
+<blockquote>
+<p>详见昨天笔记</p>
+</blockquote>
+
+<h2 id="请求参数传递及编码问题">请求参数传递及编码问题</h2>
+
+<blockquote>
+<p>SpringMVC框架可以丰常方便地接收用户的请求参数，而且也可以帮助我们自动封装成相应的对象</p>
+</blockquote>
+
+<h3 id="springmvc支持如下方式来获取用户的请求参数">SpringMVC支持如下方式来获取用户的请求参数</h3>
+
+<ol>
+<li>直接在方法中，添加相关的实体类对象[PO, pojo]或是值对象[VO, Value Object]【比较常用】</li>
+</ol>
+
+<p>//示例代码</p>
+
+<pre><code class="language-java">   @Controller
+   public class UserController {
+       
+       @RequestMapping(&quot;/user/register&quot;)
+       /*****************
+        * 此处要求，页面表单项中的name属性值要和User对象的属性名保持一致，这个是约定
+        */
+       public String register(User user,Model model) {
+           //...再做进一步的业务处理
+       }
+   }
+</code></pre>
+
+<ol>
+<li>直接在方法中，添加单个表单项的参数【比较常用】</li>
+</ol>
+
+<p>//示例代码</p>
+
+<pre><code class="language-java">   @Controller
+   public class UserController {
+       
+       @RequestMapping(&quot;/user/register&quot;)
+       /*****************
+        * 如果请求参数的名字与方法中的参数名不一样，我们有两种做法：
+        * 1. 修改方法中的参数名与页面表单项中的name属性值一样
+        * 2. 使用 @RequestParam 注解来修饰方法参数，使得名字与页面表单项中的name属性值一样
+        */
+       public String login(String username, String pwd, Model model) {
+           //...再做进一步的业务处理
+       }
+   }
+</code></pre>
+
+<ol>
+<li>传统的代码，也就是原生的Servlet代码 【不可取，不建议使用】</li>
+</ol>
+
+<p>//示例代码</p>
+
+<pre><code class="language-java">   @Controller
+   public class UserController {
+       @RequestMapping(&quot;/user/register&quot;)
+       public void register(HttpServletRequest req, HttpServletResponse resp) {
+           //通过req对象来获取用户的请求参数
+           String userName = req.getParameter(&quot;name&quot;);
+           String pwd = req.getParameter(&quot;password&quot;);
+           String realName = req.getParameter(&quot;realName&quot;);
+           //还要进一步封装
+           User user = new User();
+           user.setUserName(userName);
+           user.setPassword(pwd);
+           user.setRealName(realName);
+           //....再做进一步的业务处理
+           ....
+           //绑定信息到request范围
+           req.setAttribute(&quot;key&quot;,xxxx);
+           //转发或重定向
+           String targetURL = &quot;/jsp/xxx.jsp&quot;;
+           req.getRequestDispatcher(targetURL).forward(req,resp);
+       }
+   }
+</code></pre>
+
+<h3 id="编码问题">编码问题</h3>
+
+<blockquote>
+<p>为什么会有乱码？</p>
+
+<p>​ 数据的编码和解码不一致造成的。</p>
+
+<p>​ 在WEB应用中，请求的数据会根据method的类型不同，采用不同的位置来传输，如果是get请求，则数据封装到请求头[Header]中传输，如果是post请求，则数据封装到请求体部[body]传输</p>
+
+<p>​ 通过request.setCharacterEncoding方法，只能修改请求体部的编码，影响不了头部。</p>
+</blockquote>
+
+<p>解决方案：</p>
+
+<ol>
+<li><p>添加 编码过滤器， SpringMVC已经提供了一个编码过滤器 <code>org.springframework.web.filter.CharacterEncodingFilter</code> ，它只能影响POST请求</p></li>
+
+<li><p>在容器中，修改相关的配置项，以Tomcat为例，在<code>$CATALINA_HOME/conf/server.xml</code>中的<Connector port="8080"> 标记中，增加一个 URIEncoding=&ldquo;UTF-8&rdquo; 属性。它会影响请求头的编码</p></li>
+
+<li><p>如果你使用maven中Tomcat7插件的话，则只需要在 插件的配置中，添加一个属性：</p></li>
+</ol>
+
+<pre><code class="language-xml">   &lt;plugin&gt;
+       &lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;
+       &lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;
+       &lt;version&gt;2.2&lt;/version&gt;
+           &lt;configuration&gt;
+              &lt;port&gt;8888&lt;/port&gt;
+              &lt;!-- 影响请求头的编码 --&gt;
+              &lt;uriEncoding&gt;utf-8&lt;/uriEncoding&gt;
+           &lt;/configuration&gt;
+   &lt;/plugin&gt;
+</code></pre>
+
+<blockquote>
+<p>注：以上的2 和 3本质是一样的。</p>
+</blockquote>
+
+<h2 id="静态资源访问">静态资源访问</h2>
+
+<blockquote>
+<p>在SpringMVC提供的前置控制器[大C]，它有如下的匹配模式</p>
+
+<ul>
+<li>采用 *.xxx 来匹配，这种匹配模式叫扩展名匹配，它是基于后缀来匹配的，它的优点是不会拦截静态资源【像css, 图片,js之类的，只要大C的扩展名与静态资源扩展名不一样即可】，缺点是它不支持 <code>Restful</code>风格的URL。</li>
+<li>采用 / 来匹配，这种匹配模式叫通配匹配，它可以匹配一切，优点完全支持<code>Restful</code>风格的URL，缺点是所有的静态资源也会被拦截，性能差一点。现在是主流【推荐】</li>
+</ul>
+</blockquote>
+
+<p>如何在采用/匹配模式下，不让大C去拦截静态资源呢？ 有如下三种方式：</p>
+
+<ol>
+<li>利用容器本身的Servlet处理器，也叫默认处理器，在web.xml中，要配置在大C之前，如下：</li>
+</ol>
+
+<pre><code class="language-xml">   &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;default&lt;/servlet-name&gt;
+       &lt;url-pattern&gt;*.png&lt;/url-pattern&gt;
+   &lt;/servlet-mapping&gt;
+</code></pre>
+
+<p>这种方式有两个缺点：</p>
+
+<ul>
+<li>配置比较冗长，每一段servlet-mapping，只能处理一个扩展名</li>
+<li>不同的WEB容器，这个默认的servlet-name是不一样的，如下：
+
+<ul>
+<li>Tomcat 对应的是 default<br /></li>
+<li>WebLogic 对应的是 FileServlet</li>
+<li>Websphere 对应的是 xxx [可以自已去查]</li>
+</ul></li>
+</ul>
+
+<p>所以，不建议大家使用</p>
+
+<ol>
+<li>在 xxx-servlet.xml 配置文件中，添加一个 配置，如下：</li>
+</ol>
+
+<pre><code class="language-xml">   ....
+   &lt;mvc:default-servlet-handler/&gt;
+</code></pre>
+
+<blockquote>
+<p>它会自动帮助我们选择一个默认的容器提供的 Servlet处理器</p>
+</blockquote>
+
+<ol>
+<li>在 xxx-servlet.xml配置文件中，通过 &lt;mvc:resources&gt;  来添加静态资源</li>
+</ol>
+
+<pre><code class="language-xml">   ...
+   &lt;mvc:resources mapping=&quot;&quot; location=&quot;&quot;/&gt;
+</code></pre>
+
+<p>注：以上三种方式都是基于 <code>xml</code> 配置的,下面我们可以通过注解达到相同的目的</p>
+
+<ol>
+<li>在 <code>WebMvcConfig</code> 配置类中，重写父类<code>WebMvcConfigurerAdapter</code> 中的<code>addResourceHandlers</code>方法,如下：</li>
+</ol>
+
+<pre><code class="language-java">   @Override
+   public void addResourceHandlers(ResourceHandlerRegistry registry) {
+      LOGGER.debug(&quot;--- 进入addResourceHandlers方法...&quot;);
+      //
+     registry.addResourceHandler(&quot;/images/**&quot;).addResourceLocations(&quot;/images/&quot;);
+   }
+</code></pre>
+
+<blockquote>
+<p>注：此方法需要注意一点：</p>
+
+<p>​  如果你的静态资源是放在 resources 目录下，则在addResourcelocations方法中，需要加上&rdquo;classpath:&rdquo; 前缀，如果放在 webapp目录下，则不需要添加 &ldquo;classpath:&rdquo; 前缀</p>
+</blockquote>
+
+<ol>
+<li>在 <code>WebMvcConfig</code> 配置类中，重写父类<code>WebMvcConfigurerAdapter</code> 中的<code>configureDefaultServletHandling</code>方法,如下：</li>
+</ol>
+
+<pre><code class="language-java">   @Override
+   public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+       LOGGER.debug(&quot;--- 进入configureDefaultServletHandling方法...&quot;);
+       configurer.enable();
+   }
+</code></pre>
+
+<p>注：相当于在xml中，添加了</p>
+
+<pre><code class="language-xml">   &lt;mvc:default-servlet-handler/&gt;
+</code></pre>
+
+<p>建议：使用第一种方案</p>
+
+<h3 id="视图解析器的配置">视图解析器的配置</h3>
+
+<blockquote>
+<p>默认情况下，没有指定视图解析器时，我们在控制器的方法中，需要编写完整的目标资源路径. 当然，我们也可以为项目配置一个视图解析器，方便我们的开发</p>
+</blockquote>
+
+<p>注解的配置步骤：</p>
+
+<ol>
+<li>在<code>WebMvcConfig</code> 配置类中，添加一个 @Bean 方法，在这个方法中，创建一个<code>InternalResourceViewResolver</code> 对象，并设置相关的属性，如下：</li>
+</ol>
+
+<pre><code class="language-java">   @Bean
+   public InternalResourceViewResolver internalResourceViewResolver() {
+     //创建InternalResourceViewResolver
+     InternalResourceViewResolver irvr = new InternalResourceViewResolver();
+     //设置属性
+     irvr.setPrefix(&quot;/WEB-INF/jsp/&quot;);  //指定前缀
+     irvr.setSuffix(&quot;.jsp&quot;);           //指定后缀
+     //设置视图处理类 [可选，默认就是 JstlView.class ]
+     irvr.setViewClass(JstlView.class);
+     //
+     return irvr;
+   }
+</code></pre>
+
+<ol>
+<li>然后，在你的控制器的方法中，直接返回 目标jsp文件的名字即可，无需使用 全路径。</li>
+</ol>
+
+<h3 id="有关转发和重定向">有关转发和重定向</h3>
+
+<blockquote>
+<p>有SpringMVC框架中，我们同样可以指定请求是转发[forward]还是重定向[redirect], 方法如下：</p>
+
+<p>在 控制器方法的返回字符中中，添加两个前缀：</p>
+
+<ol>
+<li>forward:   表示 转发，默认就是这个, 但是，我们在返回值中，加与没有加 forward前缀是有很大差别的，如果加了 forward: 前缀，则会无视配置的视图解析器</li>
+<li>redirect:    表示重定向</li>
+</ol>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

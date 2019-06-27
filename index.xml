@@ -13,10 +13,10 @@
     
     <item>
       <title>SpringBoot入门</title>
-      <link>https://tianhualiang2019.github.io/posts/springboot%E5%85%A5%E9%97%A8/</link>
+      <link>https://tianhualiang2019.github.io/post/springboot%E5%85%A5%E9%97%A8/</link>
       <pubDate>Sat, 08 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://tianhualiang2019.github.io/posts/springboot%E5%85%A5%E9%97%A8/</guid>
+      <guid>https://tianhualiang2019.github.io/post/springboot%E5%85%A5%E9%97%A8/</guid>
       <description>一、SpringBoot入门 1、SpringBoot简介  简化Spring应用开发的一个框架
 整个Spring技术栈的一个大整合
 javaEE开发的一站式解决方案
@@ -26,6 +26,248 @@ javaEE开发的一站式解决方案
 每一个功能元素最终都是一个可独立替换和独立升级的软件单元；
 3、SpringBoot HelloWorld 功能：浏览器发送hello请求，服务器接受请求并处理，响应HelloWorld字符串
 1、创建一个maven工程；（jar） 2、导入springboot的依赖  &amp;lt;!--SpringBoot的版本仲裁中心，以后我们导入依赖默认是不需要写版本的--&amp;gt; &amp;lt;parent&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-parent&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.5.9.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/parent&amp;gt; &amp;lt;!--启动不同类型的项目，导入相应的starter依赖即可，此处是web应用，导入spring-boot-starter-web--&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt;  3、编写一个主程序:启动SpringBoot /* * @SpringBootApplication标注一个主程序类，说明这是一个SpringBoot应用。 */ @SpringBootApplication public class HelloWorldApplication { public static void main(String[] args) { //spring应用启动起来，run方法的参数为@SpringBootApplication注解的类。 SpringApplication.run(HelloWorldApplication.class,args); } }  4、编写一个相关的Controller、Service  //@ResponseBody/*这个类的所有方法返回的数据直接写给浏览器(如果写在方法上作用于对应方法)，如果是对象转为json数据*/ //@Controller @RestController/*在4.2版本以后，RestController相当于ResponseBody,Controller两个注解*/ public class HelloController { @RequestMapping(&amp;quot;/hello&amp;quot;) public String hello(){ return &amp;quot;Hello World&amp;quot;; } }  直接运行main方法，启动SpringBoot,浏览器发送hello请求，即可访问</description>
+    </item>
+    
+    <item>
+      <title>Spring框架中申明式事务的学习和使用-掌握DT(三)</title>
+      <link>https://tianhualiang2019.github.io/post/spring-3/</link>
+      <pubDate>Wed, 10 Jan 2018 10:13:18 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/spring-3/</guid>
+      <description>Spring框架  本课程旨在让你掌握spring框架的核心思想，理解如何使用spring,明白依赖注入、面向切面编程、申明式事务的机制和使用方式，通过本系列课程的学习，能够胜任在开发中使用spring框架，能够很好地应用框架进行coding工作。同时，也为后绪的spring MVC学习打好坚实的知识基础和技术基础。本课程主要包含如下几个知识点
+  Spring框架的核心架构以及对Bean的管理 依赖注入 面向切面编程 xml配置和流行的注解配置 申明式事务的配置 与持久层的集成[本例采用Hibernate框架，如想要学习与mybatis的集成，请看mybatis系列文章之四和五]  另外，本系列教程中的所有案例代码，都是基于maven进行管理的
+Spring框架的事务管理支持两种方式  编程式事务
+编程式事务就是指通过在代码中嵌入事务控制代码来手动控制事务，这个方式的优点是可以在方法体中的代码块级别进行控制事务，粒度较细，缺点是要侵入我们的业务代码，不推荐使用。
+申明式事务
+申明式事务是基于Spring的框架AOP技术，把事务当做一个“切面”,在需要做事务控制的代码上织入，可以控制到方法层面，其优点是无需侵入目标代码，而且Spring针对不同的底层持久层实现提供了不同的事务管理API，非常方便
+ Spring框架事务结构  下面的图示可以很清晰地展示Spring框架的事务API结构  Spring并不直接管理事务，而是提供了多种事务管理器，如果持久层采用JDBC技术或mybatis框架，则选择DataSourceTransactionManager来管理事务，如果采用Hibernate框架，则选择HibernateTransactionManager来管理事务，等等
+事务的属性  事务的属性包括隔离级别、传播性、超时时间、回滚规则、只读性5个方面，如下图  事务隔离级别 [Isolation]  ISOLATION_DEFAULT
+   使用后端数据库默认的隔离级别 2. ISOLATION_READ_UNCOMMITTED
+最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读 3. ISOLATION_READ_COMMITTED
+允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生 4. ISOLATION_REPEATABLE_READ
+对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生 5. ISOLATION_SERIALIZABLE
+最高的隔离级别，完全服从ACID的隔离级别，确保阻止脏读、不可重复读以及幻读，也是最慢的事务隔离级别，因为它通常是通过完全锁定事务相关的数据库表来实现的
+ 事务传播性 [Propagation]  定义事务是如何传播的，它描述的是从一个事务方法中调用另一个事务方法时，被调用方法的事务该如何与前面的事务协调，Spring中定义了如下7种规则 每一种规则下，它的形为如下表所述：  超时性[Timeout]  为了使应用程序很好地运行，事务不能运行太长的时间。因为事务可能涉及对后端数据库的锁定，所以长时间的事务会不必要的占用数据库资源。事务超时就是事务的一个定时器，在特定时间内事务如果没有执行完毕，那么就会自动回滚，而不是一直等待其结束
+ 只读性(Read Only)  事务的第三个特性是它是否为只读事务。如果事务只对后端的数据库进行该操作，数据库可以利用事务的只读特性来进行一些特定的优化。通过将事务设置为只读，你就可以给数据库一个机会，让它应用它认为合适的优化措施
+ 回滚规则[Rollback Rule]  事务五边形的最后一个方面是一组规则，这些规则定义了哪些异常会导致事务回滚而哪些不会。默认情况下，事务只有遇到运行期异常时才会回滚，而在遇到检查型异常时不会回滚（这一行为与EJB的回滚行为是一致的） 但是你可以声明事务在遇到特定的检查型异常时像遇到运行期异常那样回滚。同样，你还可以声明事务遇到特定的异常不回滚，即使这些异常是运行期异常。</description>
+    </item>
+    
+    <item>
+      <title>Spring框架中AOP的学习和使用-掌握AOP(二)</title>
+      <link>https://tianhualiang2019.github.io/post/spring-2/</link>
+      <pubDate>Tue, 09 Jan 2018 19:23:18 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/spring-2/</guid>
+      <description>Spring框架  本课程旨在让你掌握spring框架的核心思想，理解如何使用spring,明白依赖注入、面向切面编程、申明式事务的机制和使用方式，通过本系列课程的学习，能够胜任在开发中使用spring框架，能够很好地应用框架进行coding工作。同时，也为后绪的spring MVC学习打好坚实的知识基础和技术基础。本课程主要包含如下几个知识点
+  Spring框架的核心架构以及对Bean的管理 依赖注入 面向切面编程 xml配置和流行的注解配置 申明式事务的配置 与持久层的集成[本例采用Hibernate框架，如想要学习与mybatis的集成，请看mybatis系列文章之四和五]  另外，本系列教程中的所有案例代码，都是基于maven进行管理的
+AOP简介   AOP(Aspect-Oriented Programming, 面向切面编程): 是一种新的方法论, 是对传统 OOP(Object-Oriented Programming, 面向对象编程) 的补充. AOP 的主要编程对象是切面(aspect), 而切面是模块化的横切关注点. 在应用 AOP 编程时, 仍然需要定义公共功能, 但可以明确的定义这个功能在哪里, 以什么方式应用, 并且不必修改受影响的类. 这样一来横切关注点就被模块化到特殊的对象(切面)里. AOP 的好处: &amp;gt; 4-1. 每个事物逻辑位于一个位置, 代码不分散, 便于维护和升级 &amp;gt; 4-2. 业务模块更简洁, 只包含核心业务代码.   先来看一个需求 下面是分别定义了一个接口和它的实现类，功能非常简单，实现正整数的加、减、乘、除操作，代码如下： CalculateService.java
+package com.springdemo.service; /** * Created by yejf on 2018/1/12. */ public interface CalculateService { int add(int a, int b); int subtract(int a, int b); int times(int a, int b); int divide(int a, int b); }  CalculateServiceImpl.</description>
+    </item>
+    
+    <item>
+      <title>Spring框架体系及基本配置介绍-DI的使用(一)</title>
+      <link>https://tianhualiang2019.github.io/post/spring-1/</link>
+      <pubDate>Tue, 09 Jan 2018 15:43:26 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/spring-1/</guid>
+      <description>Spring框架  本课程旨在让你掌握spring框架的核心思想，理解如何使用spring,明白依赖注入、面向切面编程、申明式事务的机制和使用方式，通过本系列课程的学习，能够胜任在开发中使用spring框架，能够很好地应用框架进行coding工作。同时，也为后绪的spring MVC学习打好坚实的知识基础和技术基础。本课程主要包含如下几个知识点
+  Spring框架的核心架构以及对Bean的管理 依赖注入 面向切面编程 xml配置和流行的注解配置 申明式事务的配置 与持久层的集成[本例采用Hibernate框架，如想要学习与mybatis的集成，请看mybatis系列文章之四和五]  另外，本系列教程中的所有案例代码，都是基于maven进行管理的
+Spring框架介绍  首先，我们给框架[framework]给一个定义：**针对某个领域的一整套解决方案 ** Spring是一个企业级业务集成的开源框架。它在业务集成方面提供了一整套的解决方案，主要有如下特性： 1. 轻量级：Spring 是非侵入性的 - 基于 Spring 开发的应用中的对象可以不依赖于 Spring 的 API 2. 依赖注入(DI &amp;mdash; dependency injection、IOC) 3. 面向切面编程(AOP &amp;mdash; aspect oriented programming) 4. 容器: Spring 是一个容器, 因为它包含并且管理应用对象的生命周期 5. 框架: Spring 实现了使用简单的组件配置组合成一个复杂的应用. 在 Spring 中可以使用 XML 和 Java 注解组合这些对象 6. 一站式：在 IOC 和 AOP 的基础上可以整合各种企业应用的开源框架和优秀的第三方类库 （实际上 Spring 自身也提供了展现层的 SpringMVC 和 持久层的 Spring JDBC）</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/01.junit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/01.junit-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
+      <description>JUnit 单元测试 POM pom.xml 文件如下：
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;com.funtl&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hello-spring&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;jar&amp;lt;/packaging&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-context&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.3.17.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; &amp;lt;/project&amp;gt;  主要增加了 junit:junit 依赖
+创建测试类 在测试包下 src/main/test 创建一个名为 MyTest 的测试类，代码如下：
+package com.funtl.hello.spring.test; import org.junit.After; import org.junit.Before; import org.junit.Test; public class MyTest { /** * 执行测试方法前执行 */ @Before public void before() { System.out.println(&amp;quot;执行 before() 方法&amp;quot;); } /** * 执行测试方法后执行 */ @After public void after() { System.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/02.junit-%E6%B3%A8%E8%A7%A3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/02.junit-%E6%B3%A8%E8%A7%A3/</guid>
+      <description> JUnit 注解    注解 描述     @Test public void method() 测试注释指示该公共无效方法它所附着可以作为一个测试用例。   @Before public void method() Before 注释表示，该方法必须在类中的每个测试之前执行，以便执行测试某些必要的先决条件。   @BeforeClass public static void method() BeforeClass 注释指出这是附着在静态方法必须执行一次并在类的所有测试之前。发生这种情况时一般是测试计算共享配置方法(如连接到数据库)。   @After public void method() After 注释指示，该方法在执行每项测试后执行(如执行每一个测试后重置某些变量，删除临时变量等)   @AfterClass public static void method() 当需要执行所有的测试在 JUnit 测试用例类后执行，AfterClass 注解可以使用以清理建立方法，(从数据库如断开连接)。注意：附有此批注(类似于 BeforeClass)的方法必须定义为静态。   @Ignore public static void method() 当想暂时禁用特定的测试执行可以使用忽略注释。每个被注解为 @Ignore 的方法将不被执行。    </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/03.mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/03.mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2/</guid>
+      <description>Mybatis一对一、一对多、多对多查询 场景：使用三张数据表：student学生表、teacher教师表、position职位表 一个学生可以有多为老师、一位老师可以有多个学生、但是一个老师只能有一个职位：教授、副教授、讲师；但是一个职位可以有多个老师：例如教授可以多人
+这里则产生了：
+一对一关系，从老师角度：老师对职位一对一
+一对多关系，从职位角度：职位对老师一对多
+多对多关系：查找被教授教导的所有学生（首先职位对老师一对多，老师再对学生再对多、这里便有了一对多对多）
+数据表： 老师表 CREATE TABLE `tb_teacher` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_no` varchar(20) DEFAULT NULL, `t_name` varchar(20) DEFAULT NULL, `position_id` int(11) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8; /*Data for the table `tb_teacher` */ insert into `tb_teacher`(`id`,`t_no`,`t_name`,`position_id`) values (1,&#39;163314001&#39;,&#39;张文远&#39;,1), (2,&#39;163314002&#39;,&#39;赵传智&#39;,1), (3,&#39;163314003&#39;,&#39;风清扬&#39;,2), (4,&#39;163314004&#39;,&#39;王汇智&#39;,2), (5,&#39;163314005&#39;,&#39;汪思远&#39;,3);  学生表 CREATE TABLE `tb_student` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_stu_name` varchar(20) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8; /*Data for the table `tb_student` */ insert into `tb_student`(`id`,`t_stu_name`) values (1,&#39;赵依&#39;), (2,&#39;钱迩&#39;), (3,&#39;张山&#39;), (4,&#39;李石&#39;), (5,&#39;王武&#39;), (6,&#39;马柳&#39;);  职位表 CREATE TABLE `tb_position` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_pos_name` varchar(20) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8; /*Data for the table `tb_position` */ insert into `tb_position`(`id`,`t_pos_name`) values (1,&#39;教授&#39;), (2,&#39;副教授&#39;), (3,&#39;讲师&#39;);  最后是教师学生关系表 CREATE TABLE `tb_stu_teach` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_stu_id` int(11) DEFAULT NULL, `t_teach_id` int(11) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8; /*Data for the table `tb_stu_teach` */ insert into `tb_stu_teach`(`id`,`t_stu_id`,`t_teach_id`) values (1,1,1), (2,1,2), (3,1,3), (4,2,2), (5,2,3), (6,2,4), (7,3,3), (8,3,4), (9,3,5), (10,4,4), (11,4,5), (12,4,1);  最后在eclipse中的目录结构如下： 希望您明白sqlMapConfig该如何配置，以及jdbc.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/03.junit-%E6%96%AD%E8%A8%80/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/03.junit-%E6%96%AD%E8%A8%80/</guid>
+      <description>JUnit 断言 什么是断言 断言是编程术语，表示为一些布尔表达式，程序员相信在程序中的某个特定点该表达式值为真，可以在任何时候启用和禁用断言验证，因此可以在测试时启用断言而在部署时禁用断言。同样，程序投入运行后，最终用户在遇到问题时可以重新启用断言。
+使用断言可以创建更稳定、品质更好且 不易于出错的代码。当需要在一个值为 false 时中断当前操作的话，可以使用断言。单元测试必须使用断言（Junit/JunitX）。
+常用断言方法    断言 描述     void assertEquals([String message], expected value, actual value) 断言两个值相等。值可能是类型有 int, short, long, byte, char or java.lang.Object. 第一个参数是一个可选的字符串消息   void assertTrue([String message], boolean condition) 断言一个条件为真   void assertFalse([String message],boolean condition) 断言一个条件为假   void assertNotNull([String message], java.lang.Object object) 断言一个对象不为空(null)   void assertNull([String message], java.lang.Object object) 断言一个对象为空(null)   void assertSame([String message], java.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/04.log4j-%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/04.log4j-%E7%AE%80%E4%BB%8B/</guid>
+      <description>Log4j Log4j 日志级别 为了方便对于日志信息的输出显示，对日志内容进行了分级管理。日志级别由高到低，共分 6 个级别： - fatal(致命的) - error - warn - info - debug - trace(堆栈)
+Log4j 日志输出控制文件 日志输出简介 Log4j 的日志输出控制文件，主要由三个部分构成： - 日志信息的输出位置：控制日志信息将要输出的位置，是控制台还是文件等。 - 日志信息的输出格式：控制日志信息的显示格式，即以怎样的字符串形式显示。 - 日志信息的输出级别：控制日志信息的显示内容，即显示哪些级别的日志信息。
+有了日志输出控制文件，代码中只要设置好日志信息内容及其级别即可，通过控制文件便可控制这些日志信息的输出了。
+日志属性配置文件 日志属性文件 log4j.properties 是专门用于控制日志输出的。其主要进行三方面控制：
+ 输出位置：控制日志将要输出的位置，是控制台还是文件等。 输出布局：控制日志信息的显示形式。 输出级别：控制要输出的日志级别。  日志属性文件由两个对象组成：日志附加器与根日志。
+根日志，即为 Java 代码中的日志记录器，其主要由两个属性构成：日志输出级别与日志附加器。
+日志附加器，则由日志输出位置定义，由其它很多属性进行修饰，如输出布局、文件位置、文件大小等。
+什么是日志附加器？ 所谓日志附加器，就是为日志记录器附加上很多其它设置信息。附加器的本质是一个接口，其定义语法为： log4j.appender.appenderName = 输出位置
+常用的附加器实现类  org.apache.log4j.ConsoleAppender：日志输出到控制台 org.apache.log4j.FileAppender：日志输出到文件 org.apache.log4j.RollingFileAppender：当日志文件大小到达指定尺寸的时候将产生一个新的日志文件 org.apache.log4j.DailyRollingFileAppender：每天产生一个日志文件  常用布局类型  org.apache.log4j.HTMLLayout：网页布局，以 HTML 表格形式布局 org.apache.log4j.SimpleLayout：简单布局，包含日志信息的级别和信息字符串 org.apache.log4j.PatternLayout：匹配器布局，可以灵活地指定布局模式。其主要是通过设置 PatternLayout 的 ConversionPattern 属性值来控制具体输出格式的 。  打印参数: Log4J 采用类似 C 语言中的 printf 函数的打印格式格式化日志信息</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/05.log4j-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/05.log4j-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/</guid>
+      <description>Log4j 日志文件 Slf4j 简介 slf4j 的全称是 Simple Loging Facade For Java，即它仅仅是一个为 Java 程序提供日志输出的统一接口，并不是一个具体的日志实现方案，就比如 JDBC 一样，只是一种规则而已。所以单独的 slf4j 是不能工作的，必须搭配其他具体的日志实现方案，比如 apache 的 org.apache.log4j.Logger，JDK 自带的 java.util.logging.Logger 以及 log4j 等。
+POM 继续之前的项目，pom.xml 配置如下：
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;com.funtl&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hello-spring&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;packaging&amp;gt;jar&amp;lt;/packaging&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-context&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.3.17.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.slf4j&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;slf4j-log4j12&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.7.25&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; &amp;lt;/project&amp;gt;  主要增加了 org.slf4j:slf4j-log4j12 依赖
+创建 log4j.properties 配置文件 在 src/main/resources 目录下创建名为 log4j.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/ajax%E5%89%8D%E5%90%8E%E5%8F%B0%E4%BC%A0%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/ajax%E5%89%8D%E5%90%8E%E5%8F%B0%E4%BC%A0%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>Ajax前后台传值的问题 ajax请求返回数据处理 无参 情况1： js代码
+function getData() { $.ajax({ url:&#39;data/getStr&#39;, success:function(result){ alert(result); //弹窗内容：true } })  Controller代码：
+@RequestMapping(value = &amp;quot;/data/getStr&amp;quot; ,produces = &amp;quot;text/html;charset=UTF-8&amp;quot;) @ResponseBody public String getStr(){ return &amp;quot;true&amp;quot;; }  情况2： js代码
+function getData1() { $.ajax({ url:&#39;data/getStr1&#39;, success:function(result){ var user = eval(&amp;quot;(&amp;quot;+result+&amp;quot;)&amp;quot;); alert(user.name); //弹窗内容：小明 } }) }  Controller代码：
+@RequestMapping(value= &amp;quot;/data/getStr1&amp;quot;,produces = &amp;quot;text/html;charset=UTF-8&amp;quot;) @ResponseBody public String getStr1(){ return &amp;quot;{\&amp;quot;name\&amp;quot;:\&amp;quot;小明\&amp;quot;,\&amp;quot;sex\&amp;quot;:\&amp;quot;男\&amp;quot;,\&amp;quot;address\&amp;quot;:\&amp;quot;北京\&amp;quot;,\&amp;quot;job\&amp;quot;:\&amp;quot;web前端工程师\&amp;quot;}&amp;quot;; }  情况3： js代码
+function getData2() { $.ajax({ url:&#39;data/getMap&#39;, success:function(result){ alert(result.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/springboot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/springboot/</guid>
+      <description>一、SpringBoot入门 1、SpringBoot简介  简化Spring应用开发的一个框架
+整个Spring技术栈的一个大整合
+javaEE开发的一站式解决方案
+2、微服务 2014,martin fowler
+ 微服务：架构风格（服务微化）
+一个应用应该是一组小型服务；可以通过HTTP的方式进行互通
+每一个功能元素最终都是一个可独立替换和独立升级的软件单元；
+3、SpringBoot HelloWorld 功能：浏览器发送hello请求，服务器接受请求并处理，响应HelloWorld字符串
+1、创建一个maven工程；（jar） 2、导入springboot的依赖  &amp;lt;!--SpringBoot的版本仲裁中心，以后我们导入依赖默认是不需要写版本的--&amp;gt; &amp;lt;parent&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-parent&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.5.9.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/parent&amp;gt; &amp;lt;!--启动不同类型的项目，导入相应的starter依赖即可，此处是web应用，导入spring-boot-starter-web--&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt;  3、编写一个主程序:启动SpringBoot /* * @SpringBootApplication标注一个主程序类，说明这是一个SpringBoot应用。 */ @SpringBootApplication public class HelloWorldApplication { public static void main(String[] args) { //spring应用启动起来，run方法的参数为@SpringBootApplication注解的类。 SpringApplication.run(HelloWorldApplication.class,args); } }  4、编写一个相关的Controller、Service @Controller public class HelloController { @ResponseBody @RequestMapping(&amp;quot;/hello&amp;quot;) public String hello(){ return &amp;quot;Hello World&amp;quot;; } }  直接运行main方法，启动SpringBoot,浏览器发送hello请求，即可访问</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/springboot%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/springboot%E9%85%8D%E7%BD%AE/</guid>
+      <description>SpringBoot配置 1、配置文件 SpringBoot使用一个全局配置文件，配置文件名是固定的； - application.propertie - application.yml
+配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好了；
+ YAML( YAML Ain&amp;rsquo;t Makeup language) ：它是类似于标准通用标记语言的子集XML的数据描述语言，语法比XML简单很多
+以前的配置文件：大多数都使用的是 xxx.xml文件；
+YAML:以数据为中心，比json、xml等更适合做配置文件；
+YAML:配置例子
+server: port: 8081  XML:配置例子
+&amp;lt;server&amp;gt; &amp;lt;port&amp;gt;8081&amp;lt;/port&amp;gt; &amp;lt;/server&amp;gt;  2、YAML语法 1、基本语法 k:(空格)v :表示一对键值对（空格必须有）
+ 属性和值是大小写敏感的
+以空格的缩进来控制层级关系：只要是左对齐的一列数据，都是同一个层级的
+server: port: 8081 path: /hello  2、值的写法 字面量：普通的值（数字、字符串、布尔） k: v :字面直接来写； 字符串默认不用加上单引号或者双引号 &amp;quot;&amp;quot;:双引号，不会转义字符串里面的特殊字符，特殊字符会作为本身想表示的意思 name：&amp;quot;zhangsan \n lisi&amp;quot; 输出：zhangsan 换行 lisi &amp;quot;&amp;quot;:单引号，会转义字符串里面的特殊字符，特殊字符最终只是一个普通的字符串数据 name：&amp;quot;zhangsan \n lisi&amp;quot; 输出：zhangsan \n lisi  对象、Map(属性值)(键值对)： k: v :在下一行来写对象的属性和值的关系；注意缩进  friends: lastName: zhangsan age: 20  行内写法：</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/springmvc-%E6%A1%86%E6%9E%B6-4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/springmvc-%E6%A1%86%E6%9E%B6-4/</guid>
+      <description>SpringMVC 框架 拦截器[Interceptor]  主要是针对SpringMVC框架中的控制器进行拦截
+ 使用Interceptor的步骤  ###### 编写一个 拦截器类，需要实现 HandlerInterceptor , 或者 继承 HandlerInterceptorAdapter类  这个接口有三个方法
+ preHandle 方法, 在执行目标Handler【小C控制器中的某个方法】之前 被调用 postHandle 方法, 在执行目标Handler【小C控制器中的某个方法】之后，但是在View被渲染之前 afterCompletion 方法，也就是请求完成【VIEW被渲染】后执行  注：我们可以根据需要来决定重写哪个方法，不是所有方法都要重写的。
+另外，preHandle 方法的返回值是布尔类型，为true时，则执行目标控制器中方法，如果为false,则应该直接响应客户端。
+注：SpringMVC中提供了HandlerInterceptorAdapter类，我们只需要继承这个类即可，并重写你需要重写的方法即可。
+ 在xxxx-servlet.xml中，来配置 拦截器。【注：SpringMVC中暂没有提供 拦截器的注解配置】  &amp;lt;mvc:interceptors&amp;gt; &amp;lt;mvc:interceptor&amp;gt; &amp;lt;mvc:mapping path=&amp;quot;&amp;quot;/&amp;gt; &amp;lt;mvc:exclude-mapping path=&amp;quot;&amp;quot;/&amp;gt; &amp;lt;bean class=&amp;quot;注解的类路径&amp;quot;/&amp;gt; &amp;lt;/mvc:interceptor&amp;gt; &amp;lt;!-- 可以配置多个 --&amp;gt; &amp;lt;/mvc:interceptors&amp;gt;   如果我们配置了多个拦截器，则这些拦截器的执行顺序就是我们配置的顺序.
+ 配置了多个拦截器后，此处假设我们有 Interceptor1, 和 Interceptor2, 它们的执行顺序：
+ Interceptor1.preHandle() Interceptor2.preHandle() 执行目标的Handler【也就是控制器的目标方法】 Interceptor2.postHandle() Interceptor1.postHandle() 渲染视图后 Interceptor2.afterCompletion() Interceptor1.afterCompletion()   注：</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/springmvc-1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/springmvc-1/</guid>
+      <description>SpringMVC框架 基本流程  基于maven构建一个WEB项目【直接使用现有的maven web项目模板】
+ 在pom.xml中，加入spring mvc的依赖，它的名字：spring-webmvc
+ 配置web.xml文件，这个文件的内容主要是配置SpringMVC前置控制器DispatcherServlet,如下：
+  &amp;lt;!-- spring mvc 主控制器 --&amp;gt; &amp;lt;servlet&amp;gt; &amp;lt;servlet-name&amp;gt;DispatcherServlet&amp;lt;/servlet-name&amp;gt; &amp;lt;servlet-class&amp;gt;org.springframework.web.servlet.DispatcherServlet&amp;lt;/servlet-class&amp;gt; &amp;lt;init-param&amp;gt; &amp;lt;param-name&amp;gt;contextClass&amp;lt;/param-name&amp;gt; &amp;lt;!-- 启动解注类来使用spring mvc的配置 --&amp;gt; &amp;lt;param-value&amp;gt;org.springframework.web.context.support.AnnotationConfigWebApplicationContext&amp;lt;/param-value&amp;gt; &amp;lt;/init-param&amp;gt; &amp;lt;init-param&amp;gt; &amp;lt;param-name&amp;gt;contextConfigLocation&amp;lt;/param-name&amp;gt; &amp;lt;!-- 告诉SpringMVC的前置控制器，我们的配置类在哪里，下面写的就是配置类的全限定名 --&amp;gt; &amp;lt;param-value&amp;gt;com.hcedu.springdemo.config.WebMvcConfig&amp;lt;/param-value&amp;gt; &amp;lt;/init-param&amp;gt; &amp;lt;!-- 表示此Servlet中容器启动时，就初始化，不用等到第一个请求到来之间 --&amp;gt; &amp;lt;load-on-startup&amp;gt;1&amp;lt;/load-on-startup&amp;gt; &amp;lt;/servlet&amp;gt;   编写 配置类WebMvcConfig类， 如下：  //WebMvcConfig.java @Configuration //这是一个配置类 @ComponentScan({&amp;quot;com.hcedu.springdemo.controller&amp;quot;}) //指定扫描的包及其子包 @EnableWebMvc //启动WEB MVC 功能 (和 AOP, DT 一样，默认都是禁用的) public class WebMvcConfig extends WebMvcConfigurerAdapter { //继承WebMvc配置适配器类 //nothing! }  注：</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-2/</guid>
+      <description>SpringMVC框架 项目搭建流程  详见昨天笔记
+ 请求参数传递及编码问题  SpringMVC框架可以丰常方便地接收用户的请求参数，而且也可以帮助我们自动封装成相应的对象
+ SpringMVC支持如下方式来获取用户的请求参数  直接在方法中，添加相关的实体类对象[PO, pojo]或是值对象[VO, Value Object]【比较常用】  //示例代码
+@Controller public class UserController { @RequestMapping(&amp;quot;/user/register&amp;quot;) /***************** * 此处要求，页面表单项中的name属性值要和User对象的属性名保持一致，这个是约定 */ public String register(User user,Model model) { //...再做进一步的业务处理 } }   直接在方法中，添加单个表单项的参数【比较常用】  //示例代码
+@Controller public class UserController { @RequestMapping(&amp;quot;/user/register&amp;quot;) /***************** * 如果请求参数的名字与方法中的参数名不一样，我们有两种做法： * 1. 修改方法中的参数名与页面表单项中的name属性值一样 * 2. 使用 @RequestParam 注解来修饰方法参数，使得名字与页面表单项中的name属性值一样 */ public String login(String username, String pwd, Model model) { //...再做进一步的业务处理 } }   传统的代码，也就是原生的Servlet代码 【不可取，不建议使用】  //示例代码</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-3/</guid>
+      <description>SpringMVC框架  知识点回顾：
+ SpringMVC基于maven的项目构建 配置 web.xml 文件【配置大C， 以及配置编码过滤器】， 建议CV大法 编写WebMvcConfig 配置类，建议 CV 大法 开发 控制器类，这个完全由需求决定 开发 jsp 如有需要，添加 业务层 和 持久层  导入配置了 业务层和持久层 的配置类 AppConfig 在控制层中自动注入 业务层   有关请求参数的获取
+有关编码的问题
+有关静态资源的问题
+有关视图解析器的问题
+ 文件上传和下载  普通的请求数据都是以字符串的形式传递的，
+而文件类型的数据是以二进制流的形式传递的
+回忆一下表单中的属性：
+&amp;gt; ... &amp;gt; &amp;lt;form name=&amp;quot;表单名&amp;quot; action=&amp;quot;服务端资源名&amp;quot; method=&amp;quot;get|post&amp;quot; &amp;gt; enctype=&amp;quot;application/x-www-form-urlencoded&amp;quot;&amp;gt; &amp;gt; &amp;lt;input type=&amp;quot;xxxx&amp;quot; /&amp;gt; &amp;gt; ... &amp;gt; &amp;lt;/form&amp;gt; &amp;gt; ``` &amp;gt; &amp;gt; 注： &amp;gt; &amp;gt; enctype属性指定表单数据编码格式，默认是 application/x-www-form-urlencoded &amp;gt; &amp;gt; 如果你要做文件的上传，则这个表单要满足两个条件 &amp;gt; &amp;gt; 1.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tianhualiang2019.github.io/post/spring-validation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/spring-validation/</guid>
+      <description>Spring Validation JSR-303 简介 JSR-303 是 JavaEE 6 中的一项子规范，叫做 Bean Validation，官方参考实现是 Hibernate Validator。
+此实现与 Hibernate ORM 没有任何关系。JSR-303 用于对 Java Bean 中的字段的值进行验证。 Spring MVC 3.x 之中也大力支持 JSR-303，可以在控制器中使用注解的方式对表单提交的数据方便地验证。
+Spring 4.0 开始支持 Bean Validation 功能。
+JSR-303 基本的校验规则 空检查  @Null 验证对象是否为 null @NotNull 验证对象是否不为 null, 无法查检长度为 0 的字符串 @NotBlank 检查约束字符串是不是 Null 还有被 Trim 的长度是否大于 0,只对字符串,且会去掉前后空格 @NotEmpty 检查约束元素是否为 NULL 或者是 EMPTY  布尔检查  @AssertTrue 验证 Boolean 对象是否为 true @AssertFalse 验证 Boolean 对象是否为 false  长度检查  @Size(min=, max=) 验证对象（Array, Collection , Map, String）长度是否在给定的范围之内 @Length(min=, max=) 验证字符串长度介于 min 和 max 之间  日期检查  @Past 验证 Date 和 Calendar 对象是否在当前时间之前，验证成立的话被注释的元素一定是一个过去的日期 @Future 验证 Date 和 Calendar 对象是否在当前时间之后 ，验证成立的话被注释的元素一定是一个将来的日期  正则检查  @Pattern 验证 String 对象是否符合正则表达式的规则，被注释的元素符合制定的正则表达式 regexp：正则表达式 flags：指定 Pattern.</description>
     </item>
     
   </channel>

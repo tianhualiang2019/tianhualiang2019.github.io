@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title> // Ray的个人博客</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Ray" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://tianhualiang2019.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="SpringMVC框架  知识点回顾：
+ SpringMVC基于maven的项目构建 配置 web.xml 文件【配置大C， 以及配置编码过滤器】， 建议CV大法 编写WebMvcConfig 配置类，建议 CV 大法 开发 控制器类，这个完全由需求决定 开发 jsp 如有需要，添加 业务层 和 持久层  导入配置了 业务层和持久层 的配置类 AppConfig 在控制层中自动注入 业务层   有关请求参数的获取
+有关编码的问题
+有关静态资源的问题
+有关视图解析器的问题
+ 文件上传和下载  普通的请求数据都是以字符串的形式传递的，
+而文件类型的数据是以二进制流的形式传递的
+回忆一下表单中的属性：
+&gt; ... &gt; &lt;form name=&quot;表单名&quot; action=&quot;服务端资源名&quot; method=&quot;get|post&quot; &gt; enctype=&quot;application/x-www-form-urlencoded&quot;&gt; &gt; &lt;input type=&quot;xxxx&quot; /&gt; &gt; ... &gt; &lt;/form&gt; &gt; ``` &gt; &gt; 注： &gt; &gt; enctype属性指定表单数据编码格式，默认是 application/x-www-form-urlencoded &gt; &gt; 如果你要做文件的上传，则这个表单要满足两个条件 &gt; &gt; 1."/>
+
+    <meta property="og:title" content="" />
+<meta property="og:description" content="SpringMVC框架  知识点回顾：
+ SpringMVC基于maven的项目构建 配置 web.xml 文件【配置大C， 以及配置编码过滤器】， 建议CV大法 编写WebMvcConfig 配置类，建议 CV 大法 开发 控制器类，这个完全由需求决定 开发 jsp 如有需要，添加 业务层 和 持久层  导入配置了 业务层和持久层 的配置类 AppConfig 在控制层中自动注入 业务层   有关请求参数的获取
+有关编码的问题
+有关静态资源的问题
+有关视图解析器的问题
+ 文件上传和下载  普通的请求数据都是以字符串的形式传递的，
+而文件类型的数据是以二进制流的形式传递的
+回忆一下表单中的属性：
+&gt; ... &gt; &lt;form name=&quot;表单名&quot; action=&quot;服务端资源名&quot; method=&quot;get|post&quot; &gt; enctype=&quot;application/x-www-form-urlencoded&quot;&gt; &gt; &lt;input type=&quot;xxxx&quot; /&gt; &gt; ... &gt; &lt;/form&gt; &gt; ``` &gt; &gt; 注： &gt; &gt; enctype属性指定表单数据编码格式，默认是 application/x-www-form-urlencoded &gt; &gt; 如果你要做文件的上传，则这个表单要满足两个条件 &gt; &gt; 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-3/" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://tianhualiang2019.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="Ray" /></a>
+      <h1>Ray的个人博客</h1>
+      <p>Do you want to spend the rest of your life selling sugared water or do you want a chance to change the world?</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/tianhualiang2019"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://gitee.com/ray_thl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://goldenaarcher.github.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="http://wvincen.gitee.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title"></h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 1, 0001
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="springmvc框架">SpringMVC框架</h1>
+
+<blockquote>
+<p>知识点回顾：</p>
+
+<ol>
+<li>SpringMVC基于maven的项目构建</li>
+<li>配置 web.xml 文件【配置大C， 以及配置编码过滤器】， 建议CV大法</li>
+<li>编写<code>WebMvcConfig</code> 配置类，建议 CV 大法</li>
+<li>开发 控制器类，这个完全由需求决定</li>
+<li>开发 jsp</li>
+<li>如有需要，添加 业务层 和 持久层
+
+<ol>
+<li>导入配置了 业务层和持久层 的配置类 <code>AppConfig</code></li>
+<li>在控制层中自动注入 业务层</li>
+</ol></li>
+</ol>
+
+<hr />
+
+<p>有关请求参数的获取</p>
+
+<p>有关编码的问题</p>
+
+<p>有关静态资源的问题</p>
+
+<p>有关视图解析器的问题</p>
+</blockquote>
+
+<h2 id="文件上传和下载">文件上传和下载</h2>
+
+<blockquote>
+<p>普通的请求数据都是以字符串的形式传递的，</p>
+
+<p>而文件类型的数据是以二进制流的形式传递的</p>
+
+<p>回忆一下表单中的属性：</p>
+
+<pre><code class="language-html">&gt; ...
+&gt; &lt;form name=&quot;表单名&quot; action=&quot;服务端资源名&quot; method=&quot;get|post&quot; 
+&gt;       enctype=&quot;application/x-www-form-urlencoded&quot;&gt;
+&gt;     &lt;input type=&quot;xxxx&quot; /&gt;
+&gt;     ...
+&gt; &lt;/form&gt;
+&gt; ```
+&gt;
+&gt; 注：
+&gt;
+&gt; enctype属性指定表单数据编码格式，默认是 application/x-www-form-urlencoded
+&gt;
+&gt; 如果你要做文件的上传，则这个表单要满足两个条件
+&gt;
+&gt; 1. method属性值必需是 post
+&gt; 2. enctype属性值必需是 multipart/formdata
+
+上面是针对前端页面中的form表单所做的要求，下面，我们再来看一下服务端[后台]的代码要求：
+
+在SpringMVC中，它是基于一个叫 MultipartResolver 的接口来处理Multipart数据，它有两个实现类：
+
+* [CommonsMultipartResolver](https://docs.spring.io/spring/docs/4.3.24.RELEASE/javadoc-api/org/springframework/web/multipart/commons/CommonsMultipartResolver.html),  基于第三方的组件[apache commons fileupload组件 ]
+* StandardServletMultipartResolver 基于Servlet3.0规范中提供的 Part API
+
+如何配置和使用
+
+1. 在pom.xml中，引入 fileupload依赖
+2. 编写 jsp 页面
+3. 开发 控制器类
+4. 在配置类中，添加 MultipartResolver 的Bean
+
+## 前置控制器【大C】的执行流程 
+
+&gt; DispatcherServlet是SpringMVC框架提供的一个核心处理类，它负责拦截&quot;所有请求&quot;，然后再去“分发[dispatch]”这些请求到你自己定义的资源，这个资源可以是控制器，也可以是其它资源。
+&gt;
+&gt; 通过 @RequestMapping 来请求的URL 和 对应的 控制器的方法 “映射[mapping]&quot;起来。
+
+
+
+首先，大C接收到客户端的请求后，先查询在SpringMVC容器范围内去查找是否有对应的 RequestMapping, 如果有找到，则生成一个请求执行链。
+
+其次，由这个请求执行链去执行目标的控制器的匹配方法。同时，容器会帮我们生成一个 HandlerAdapter 适配器，再由这个适配器去创建 ModelAndView
+
+第三，ModelAndView 会传递给我们的目标方法，由我们自己去准备“数据”以及决定跳转到哪个视图。
+
+第四，容器会判断你是否配置了视图解析器，如果配置了，则由视图解析器[XXXViewResolver]去解析我们想要得到的视图
+
+第五，我们是否配置了拦截器[Interceptor]，由根据匹配决定是否要进入拦截器
+
+第六，我们是否配置了异常处理器[ExceptionHandler],由配置决定如何做异常处理
+
+。。。
+
+。。。
+
+第七，最后执行会回到 大C， 由大C来响应客户端
+
+## 响应[HttpServletResponse]
+
+&gt; SpringMVC框架默认情况下，采用JSP做为视图，当然，我们在@RequestMapping中，通过设置  produces 属性来指定响应客户端的数据格式，再通过 @ResonpseBody 告诉容器，直接以方法的返回值做为响应的内容
+
+步骤：
+
+1.  在pom.xml中，添加对 json 数据解析的依赖，这个依赖可以是 Spring自带的，也可以是第三方的。如下：
+
+   ```xml
+   &lt;!-- 使用spring自带的json处理依赖包 --&gt;
+           &lt;dependency&gt;
+               &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+               &lt;artifactId&gt;jackson-core&lt;/artifactId&gt;
+               &lt;version&gt;2.6.0&lt;/version&gt;
+           &lt;/dependency&gt;
+           &lt;dependency&gt;
+               &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+               &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+               &lt;version&gt;2.6.0&lt;/version&gt;
+           &lt;/dependency&gt;
+           &lt;dependency&gt;
+               &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+               &lt;artifactId&gt;jackson-annotations&lt;/artifactId&gt;
+               &lt;version&gt;2.6.0&lt;/version&gt;
+           &lt;/dependency&gt;
+</code></pre>
+</blockquote>
+
+<ol>
+<li>控制器中，在@RequestMapping注解中，添加 produces属性，指定响应的数据格式为 application/json,再打上@ResonpseBody 注解，如下：</li>
+</ol>
+
+<pre><code class="language-java">   @RequestMapping(value = &quot;/account&quot;,produces = &quot;application/json&quot;
+                       ,method = RequestMethod.POST)
+       @ResponseBody //直接把方法的返回值当做响应的数据给到客户端
+       public Account getAccountForJson() {
+           //模拟一个帐户
+           Account a = new Account();
+           a.setOwner(&quot;张三丰&quot;);
+           a.setBalance(18000);
+           a.setId(1);
+           //再创建一个User
+           User user = new User(&quot;zhangsf&quot;,&quot;张君宝&quot;,&quot;123456&quot;);
+           a.setUser(user);
+           //返回
+           return a;
+       }
+</code></pre>
+
+<ol>
+<li>打开浏览器，发送请求，查看返回的 json 数据。</li>
+</ol>
+
+<p>注：如果你想返回 xml 格式数据，则需要在实体类中，打上JAXB的注解。有关JAXB的操作，请查看相关手册。</p>
+
+<h2 id="restful风格的url">Restful风格的URL</h2>
+
+<blockquote>
+<p>它是一种把请求数据传递到服务端的方式，传统的get请求采用查询字符串的方式来传递数据，如：</p>
+
+<p>传统的方式： <a href="http://host:port/appname/resource?username=jack&amp;password=123456">http://host:port/appname/resource?username=jack&amp;password=123456</a></p>
+
+<p>RestFul方式：<a href="http://host:port/appname/resource/jack/123456">http://host:port/appname/resource/jack/123456</a></p>
+
+<p>首先，SpringMVC框架是完全支持RestFul风格的，它的优点是：</p>
+
+<ul>
+<li>简洁、优美</li>
+<li>效率高</li>
+</ul>
+</blockquote>
+
+<p>如何在SpringMVC中，开发出符合RestFul风格的控制器呢？</p>
+
+<ol>
+<li>控制器上面使用的注解不再是 @Controller, 而是变成了 @RestController</li>
+<li>在方法中，使用@RequestMapping填写匹配的url时，通过{占位符}来指定接收的变量</li>
+<li>在方法中，使用 @PathVariable 注解来接收参数</li>
+<li>注意：由于@RestController中使用了 @ResponseBody注解，所以，方法的返回值会被当做数据响应给客户端，如果你想跳转到jsp视图，则可以把方法设计成返回 ModelAndView 类型，并返回 ModelAndView</li>
+</ol>
+
+<p>使用RestFul风格做CRUD操作，刚好可以对应请求Method中的四个类型，如下：</p>
+
+<p>​   R操作，也就是获取、查询操作，匹配  GET 请求</p>
+
+<p>​   C操作，也就是创建，新增， 匹配 POST 请求</p>
+
+<p>​   U操作， 也就是更新、修改，匹配 PUT 请求</p>
+
+<p>​   D操作， 也就是删除， 匹配 DELETE 请求</p>
+
+<h2 id="有关-httpsession-操作">有关 HTTPSession 操作</h2>
+
+<blockquote>
+<p>我们有时需要在 session 范围内绑定对象，传统的做法是：</p>
+
+<pre><code class="language-java">&gt; @RequestMapping
+&gt; public String normalSession(HttpSession session) {
+&gt;     //通过业务对象来获取了用户对象
+&gt;     User user = xxxx;
+&gt;     //把它绑定Session范围
+&gt;     session.setAttribute(&quot;LOGIN_USER&quot;, user);
+&gt;     //跳 转
+&gt;     ...
+&gt;     return &quot;....&quot;;
+&gt; }
+&gt; ```
+&gt;
+&gt; 以上的做法是完全可以的。
+&gt;
+&gt; 在SpringMVC中，我们也可以通过 `@SessionAttribute`注解来帮助我们取出存放到 session范围内的对象并自动注入到被修饰 的参数中。
+
+如：
+
+```java
+@RequestMapping(&quot;/session/special&quot;)
+public String demo2(@SessionAttribute(&quot;USER_KEY&quot;) User user, Model model) {
+    //
+    System.out.println(user);
+    return &quot;result&quot;;
+}
+</code></pre>
+</blockquote>
+
+<p>它的作用就是从 session范围取出一个名为 <code>USER_KEY</code> 的绑定对象，如果在session范围这个KEY，则会出现400错误，如果出现，则把对象注入到 user参数中，方便我们使用。</p>
+
+<p>注：</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

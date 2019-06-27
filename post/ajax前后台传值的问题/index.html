@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title> // Ray的个人博客</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Ray" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://tianhualiang2019.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Ajax前后台传值的问题 ajax请求返回数据处理 无参 情况1： js代码
+function getData() { $.ajax({ url:&#39;data/getStr&#39;, success:function(result){ alert(result); //弹窗内容：true } })  Controller代码：
+@RequestMapping(value = &quot;/data/getStr&quot; ,produces = &quot;text/html;charset=UTF-8&quot;) @ResponseBody public String getStr(){ return &quot;true&quot;; }  情况2： js代码
+function getData1() { $.ajax({ url:&#39;data/getStr1&#39;, success:function(result){ var user = eval(&quot;(&quot;&#43;result&#43;&quot;)&quot;); alert(user.name); //弹窗内容：小明 } }) }  Controller代码：
+@RequestMapping(value= &quot;/data/getStr1&quot;,produces = &quot;text/html;charset=UTF-8&quot;) @ResponseBody public String getStr1(){ return &quot;{\&quot;name\&quot;:\&quot;小明\&quot;,\&quot;sex\&quot;:\&quot;男\&quot;,\&quot;address\&quot;:\&quot;北京\&quot;,\&quot;job\&quot;:\&quot;web前端工程师\&quot;}&quot;; }  情况3： js代码
+function getData2() { $.ajax({ url:&#39;data/getMap&#39;, success:function(result){ alert(result."/>
+
+    <meta property="og:title" content="" />
+<meta property="og:description" content="Ajax前后台传值的问题 ajax请求返回数据处理 无参 情况1： js代码
+function getData() { $.ajax({ url:&#39;data/getStr&#39;, success:function(result){ alert(result); //弹窗内容：true } })  Controller代码：
+@RequestMapping(value = &quot;/data/getStr&quot; ,produces = &quot;text/html;charset=UTF-8&quot;) @ResponseBody public String getStr(){ return &quot;true&quot;; }  情况2： js代码
+function getData1() { $.ajax({ url:&#39;data/getStr1&#39;, success:function(result){ var user = eval(&quot;(&quot;&#43;result&#43;&quot;)&quot;); alert(user.name); //弹窗内容：小明 } }) }  Controller代码：
+@RequestMapping(value= &quot;/data/getStr1&quot;,produces = &quot;text/html;charset=UTF-8&quot;) @ResponseBody public String getStr1(){ return &quot;{\&quot;name\&quot;:\&quot;小明\&quot;,\&quot;sex\&quot;:\&quot;男\&quot;,\&quot;address\&quot;:\&quot;北京\&quot;,\&quot;job\&quot;:\&quot;web前端工程师\&quot;}&quot;; }  情况3： js代码
+function getData2() { $.ajax({ url:&#39;data/getMap&#39;, success:function(result){ alert(result." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tianhualiang2019.github.io/post/ajax%E5%89%8D%E5%90%8E%E5%8F%B0%E4%BC%A0%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://tianhualiang2019.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="Ray" /></a>
+      <h1>Ray的个人博客</h1>
+      <p>Do you want to spend the rest of your life selling sugared water or do you want a chance to change the world?</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/tianhualiang2019"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://gitee.com/ray_thl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://goldenaarcher.github.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="http://wvincen.gitee.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title"></h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 1, 0001
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="ajax前后台传值的问题">Ajax前后台传值的问题</h1>
+
+<h2 id="ajax请求返回数据处理">ajax请求返回数据处理</h2>
+
+<h3 id="无参">无参</h3>
+
+<h5 id="情况1">情况1：</h5>
+
+<p>js代码</p>
+
+<pre><code>function getData() {
+    $.ajax({
+        url:'data/getStr',
+        success:function(result){
+               alert(result); //弹窗内容：true
+        }
+    })
+
+</code></pre>
+
+<p>Controller代码：</p>
+
+<pre><code>@RequestMapping(value = &quot;/data/getStr&quot; ,produces = &quot;text/html;charset=UTF-8&quot;)
+@ResponseBody
+public String getStr(){
+    return &quot;true&quot;;
+}
+</code></pre>
+
+<h5 id="情况2">情况2：</h5>
+
+<p>js代码</p>
+
+<pre><code>function getData1() {
+    $.ajax({
+        url:'data/getStr1',
+        success:function(result){
+                var user = eval(&quot;(&quot;+result+&quot;)&quot;);
+                alert(user.name); //弹窗内容：小明
+        }
+    })
+}
+</code></pre>
+
+<p>Controller代码：</p>
+
+<pre><code>@RequestMapping(value= &quot;/data/getStr1&quot;,produces = &quot;text/html;charset=UTF-8&quot;)
+@ResponseBody
+public String getStr1(){
+    return &quot;{\&quot;name\&quot;:\&quot;小明\&quot;,\&quot;sex\&quot;:\&quot;男\&quot;,\&quot;address\&quot;:\&quot;北京\&quot;,\&quot;job\&quot;:\&quot;web前端工程师\&quot;}&quot;;
+}
+</code></pre>
+
+<h5 id="情况3">情况3：</h5>
+
+<p>js代码</p>
+
+<pre><code>function getData2() {
+    $.ajax({
+        url:'data/getMap',
+        success:function(result){
+                alert(result.data[0].id);//弹窗内容：1001
+        }
+    })
+}
+</code></pre>
+
+<p>Controller代码：</p>
+
+<pre><code>@RequestMapping(&quot;/data/getMap&quot;)
+@ResponseBody
+public Map&lt;String,List&lt;Student&gt;&gt;  getMap(){
+    List&lt;Student&gt; list =new ArrayList&lt;&gt;();
+    Student stu1 = new Student();
+    stu1.setId(&quot;1001&quot;);
+    stu1.setName(&quot;小明&quot;);
+    stu1.setLoc(&quot;北京&quot;);
+    list.add(stu1);
+    Map&lt;String,List&lt;Student&gt;&gt; map = new HashMap&lt;&gt;();
+    map.put(&quot;data&quot;,list);
+    return map;
+}
+</code></pre>
+
+<h5 id="情况4">情况4：</h5>
+
+<p>js代码</p>
+
+<pre><code>function getData3() {
+    $.ajax({
+        url:'data/getList',
+        success:function(result){
+             alert(result[0].name);//弹出内容：小明
+        }
+    })
+}
+</code></pre>
+
+<p>Controller代码：</p>
+
+<pre><code>@RequestMapping(&quot;/data/getList&quot;)
+@ResponseBody
+public List&lt;Student&gt; getInfo(){
+    List&lt;Student&gt; list =new ArrayList&lt;&gt;();
+    Student stu1 = new Student();
+    stu1.setId(&quot;1001&quot;);
+    stu1.setName(&quot;小明&quot;);
+    stu1.setLoc(&quot;北京&quot;);
+    list.add(stu1);
+    return list;
+}
+</code></pre>
+
+<h3 id="有参">有参</h3>
+
+<h5 id="情况1-1">情况1：</h5>
+
+<p>js代码</p>
+
+<pre><code>function requestParam(){
+    $.ajax({
+        type: &quot;POST&quot;, //请求的方式，默认get请求
+        url: &quot;testParam&quot;, //请求地址，后台提供的
+        data: {name:'root',id:1001},//data是传给后台的字段，后台需要哪些就传入哪些
+        dataType: &quot;json&quot;, //json格式，如果后台返回的数据为json格式的数据，那么前台会收到Object
+        success: function(result){
+            if(result==true){
+                alert(&quot;boolean:&quot;+result);
+            }else{
+                alert(&quot;字符串&quot;+result)
+            }
+        }
+    })
+}
+</code></pre>
+
+<p>Controller代码：</p>
+
+<pre><code>@RequestMapping(value = &quot;/testParam&quot;)
+@ResponseBody
+public String testParam(String name,Integer id){
+    System.out.println(&quot;name:&quot;+name+&quot;，id:&quot;+id);//控制台输出：name:root，id:1001
+    return &quot;true&quot;;
+}
+</code></pre>
+
+<h5 id="情况2-1">情况2：</h5>
+
+<p>js代码</p>
+
+<pre><code>function requestParam1(){
+    var data ={id:'1001',name:'测试'};
+    $.ajax({
+        type: &quot;POST&quot;, //请求的方式，默认get请求
+        url: &quot;testParam1&quot;, //请求地址，后台提供的
+        data:JSON.stringify(data),
+        contentType: 'application/json',//如果添加contentType那么传到后台的就必须是json字符串
+        dataType: &quot;json&quot;, //json格式，如果后台返回的数据为json格式的数据，那么前台会收到Object。
+        success: function(result){
+            if(result==true){
+                alert(&quot;boolean:&quot;+result);
+            }else{
+                alert(&quot;字符串&quot;+result)
+            }
+        }
+    })
+}
+</code></pre>
+
+<p>Controller代码：</p>
+
+<pre><code>@RequestMapping(value = &quot;/testParam1&quot;)
+@ResponseBody
+public String testParam1(@RequestBody Student student){
+ //也可使用@RequestBody Map&lt;String,String&gt; params接收参数
+    System.out.println(student);//控制台输出：Student{id='1001', name='测试', age=0, phone='null', loc='null'}
+    return &quot;true&quot;;
+}
+</code></pre>
+
+<p><code>Ajax请求dataType属性：dataType: &quot;json&quot;, 如果后台返回的是json格式的字符串如： &quot;{\&quot;name\&quot;:\&quot;小明\&quot;,\&quot;sex\&quot;:\&quot;男\&quot;,\&quot;address\&quot;:\&quot;北京\&quot;,\&quot;job\&quot;:\&quot;web前端工程师\&quot;}&quot; 那么前台接收到的就会是Object {name:&quot;小明&quot;,sex:&quot;男&quot;,address:&quot;北京&quot;,job:&quot;web前端工程师&quot;} 也就不需要转化成js对象就可直接取值了。但是如果后台返回的不是json格式的字符串那么前台就会解析不了，如果想获取数据将json换成text或者不使用dataType属性就行了。
+</code></p>
+
+<h2 id="json-parse-json-stringify-和-eval-函数">JSON.parse()、JSON.stringify()和 eval()函数</h2>
+
+<h4 id="json-parse-函数">JSON.parse()函数</h4>
+
+<p>作用：将json字符串转换成json对象。
+语法：JSON. parse(text[,reviver]).
+参数：text 必须；一个有效的json字符串。
+reviver 可选。
+返回值：一个对象或数组。</p>
+
+<h5 id="例1">例1：</h5>
+
+<pre><code>var jsonStr='{&quot;id&quot;:1001,&quot;name&quot;:&quot;张三&quot;}';//可以转换
+// var jsonStr=&quot;{'id':1001,'name':'张三'}&quot;; //这种会报错
+var user = JSON.parse(jsonStr);
+console.log(user.name); //输出：张三
+</code></pre>
+
+<h4 id="json-stringify-函数">JSON.stringify()函数</h4>
+
+<p>作用：将json对象转换成json字符串
+语法：JSON.stringify(value [, replacer] [, space])
+参数：value 必须；通常为对象或数组。
+replacer 可选，用于转换结果的函数或者数组。
+space 可选。向返回值 JSON 文本添加缩进、空格和换行符以使其更易于读取。
+返回值：一个包含JSON文本的字符串。</p>
+
+<h5 id="例2">例2：</h5>
+
+<pre><code>var jsonStr={id:1001,name:'张三'};
+var str = JSON.stringify(jsonStr);
+console.log(str); //输出：{&quot;id&quot;:1001,&quot;name&quot;:&quot;张三&quot;}
+</code></pre>
+
+<h3 id="eval-函数">eval()函数</h3>
+
+<p>作用：eval()函数可计算某个字符串，并执行其中的javascript表达式或要执行的语句。
+语法：eval(string)
+参数： string 必须，需要计算的字符串，其中含有要计算的javascript表达式或要执行的语句。
+返回值：返回计算string的值，没有的话不做任何改变返回。</p>
+
+<h5 id="例3">例3：</h5>
+
+<pre><code> //var jsonStr=&quot;{'id':1001,'name':'张三'}&quot;;//可以转换 
+var jsonStr='{&quot;id&quot;:1001,&quot;name&quot;:&quot;张三&quot;}';//可以转换 
+var user = eval(&quot;(&quot;+jsonStr+&quot;)&quot;);
+console.log(user.id);
+</code></pre>
+
+<p>使用eval()函数也可以将JSON字符串解析为对象，这个功能能完成JSON.parse()的功能，但是有不一样的地方。不知道大家有没有注意到eval()还要用一对圆括号将字符串包起来，对此我寻找到比较好的解释就是：
+原因：归结于eval本身的问题，由于json是以”{}”的方式来开始以及结束的，在JS中，它会被当成一个语句块来处理，所以必须强制性的将它转换成一种表达式。
+解决方法：加上圆括号的目的是迫使eval函数在处理JavaScript代码的时候强制将括号内的表达式（expression）转化为对象，而不是作为语句（statement）来执行。举一个例子，例如对象字面量{}，如若不加外层的括号，那么eval会将大括号识别为JavaScript代码块的开始和结束标记，那么{}将会被认为是执行了一句空语句。</p>
+
+<h3 id="json-parse-jsonstring-和eval-jsonstring-区别">JSON.parse(jsonString)和eval(jsonString)区别：</h3>
+
+<p><strong>安全性</strong>：JSON.parse()可以解析json格式的数据，并且会对要解析的字符串进行格式检查，如果格式不正确则不进行解析，而eval()则可以解析任何字符串，eval是不安全的。</p>
+
+<p><strong>格式严格性</strong>：JSON.parse()解析的必须是json格式的字符串要不报错，而eval()则没有这么严格，在这里“json格式的字符串”是指要求指定的字符串必须符合严格的JSON格式，例如：属性名称必须加双引号、字符串值也必须用双引号。如果传入一个格式不&rdquo;完好&rdquo;的JSON字符串将抛出一个JS异常</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

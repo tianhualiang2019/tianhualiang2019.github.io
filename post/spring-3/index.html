@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Spring框架中申明式事务的学习和使用-掌握DT(三) // Ray的个人博客</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Ray" />
+    <meta name="description" content="java开发必备技能，掌握spring框架的使用技巧，理解spring框架的核心，在依赖注入、面向切面编程的基础之上，理解事务的必要性，掌握申明式事务的配置，学习单元测试等" />
+    <link rel="stylesheet" href="https://tianhualiang2019.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring框架中申明式事务的学习和使用-掌握DT(三)"/>
+<meta name="twitter:description" content="java开发必备技能，掌握spring框架的使用技巧，理解spring框架的核心，在依赖注入、面向切面编程的基础之上，理解事务的必要性，掌握申明式事务的配置，学习单元测试等"/>
+
+    <meta property="og:title" content="Spring框架中申明式事务的学习和使用-掌握DT(三)" />
+<meta property="og:description" content="java开发必备技能，掌握spring框架的使用技巧，理解spring框架的核心，在依赖注入、面向切面编程的基础之上，理解事务的必要性，掌握申明式事务的配置，学习单元测试等" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tianhualiang2019.github.io/post/spring-3/" />
+<meta property="article:published_time" content="2018-01-10T10:13:18&#43;00:00"/>
+<meta property="article:modified_time" content="2018-01-10T10:13:18&#43;00:00"/>
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://tianhualiang2019.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="Ray" /></a>
+      <h1>Ray的个人博客</h1>
+      <p>Do you want to spend the rest of your life selling sugared water or do you want a chance to change the world?</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/tianhualiang2019"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://gitee.com/ray_thl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://goldenaarcher.github.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="http://wvincen.gitee.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Spring框架中申明式事务的学习和使用-掌握DT(三)</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 10, 2018
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          5 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="spring框架">Spring框架</h1>
+
+<blockquote>
+<p>本课程旨在让你掌握spring框架的核心思想，理解如何使用spring,明白依赖注入、面向切面编程、申明式事务的机制和使用方式，通过本系列课程的学习，能够胜任在开发中使用spring框架，能够很好地应用框架进行coding工作。同时，也为后绪的spring MVC学习打好坚实的知识基础和技术基础。本课程主要包含如下几个知识点</p>
+</blockquote>
+
+<ul>
+<li>Spring框架的核心架构以及对Bean的管理</li>
+<li>依赖注入</li>
+<li>面向切面编程</li>
+<li>xml配置和流行的注解配置</li>
+<li>申明式事务的配置</li>
+<li>与持久层的集成[本例采用Hibernate框架，如想要学习与mybatis的集成，请看mybatis系列文章之四和五]</li>
+</ul>
+
+<p>另外，本系列教程中的所有案例代码，都是基于maven进行管理的</p>
+
+<hr />
+
+<!-- more -->
+
+<h2 id="spring框架的事务管理支持两种方式">Spring框架的事务管理支持两种方式</h2>
+
+<blockquote>
+<p><strong>编程式事务</strong><br />
+    编程式事务就是指通过在代码中嵌入事务控制代码来手动控制事务，这个方式的优点是可以在方法体中的代码块级别进行控制事务，粒度较细，缺点是要侵入我们的业务代码，不推荐使用。</p>
+
+<p><strong>申明式事务</strong><br />
+    申明式事务是基于Spring的框架AOP技术，把事务当做一个“切面”,在需要做事务控制的代码上织入，可以控制到方法层面，其优点是无需侵入目标代码，而且Spring针对不同的底层持久层实现提供了不同的事务管理API，非常方便</p>
+</blockquote>
+
+<h2 id="spring框架事务结构">Spring框架事务结构</h2>
+
+<blockquote>
+<p>下面的图示可以很清晰地展示Spring框架的事务API结构
+<img src="assets/tm.jpg" alt="图示" /></p>
+</blockquote>
+
+<p><code>Spring并不直接管理事务，而是提供了多种事务管理器，如果持久层采用JDBC技术或mybatis框架，则选择DataSourceTransactionManager来管理事务，如果采用Hibernate框架，则选择HibernateTransactionManager来管理事务，等等</code></p>
+
+<h2 id="事务的属性">事务的属性</h2>
+
+<blockquote>
+<p>事务的属性包括隔离级别、传播性、超时时间、回滚规则、只读性5个方面，如下图
+<img src="assets/tm-property.jpg" alt="图示" /></p>
+</blockquote>
+
+<h3 id="事务隔离级别-isolation">事务隔离级别 [Isolation]</h3>
+
+<ol>
+<li>ISOLATION_DEFAULT<br /></li>
+</ol>
+
+<blockquote>
+<p>使用后端数据库默认的隔离级别
+2. ISOLATION_READ_UNCOMMITTED</p>
+
+<p>最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读
+3. ISOLATION_READ_COMMITTED</p>
+
+<p>允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生
+4. ISOLATION_REPEATABLE_READ</p>
+
+<p>对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生
+5. ISOLATION_SERIALIZABLE</p>
+
+<p>最高的隔离级别，完全服从ACID的隔离级别，确保阻止脏读、不可重复读以及幻读，也是最慢的事务隔离级别，因为它通常是通过完全锁定事务相关的数据库表来实现的</p>
+</blockquote>
+
+<h3 id="事务传播性-propagation">事务传播性 [Propagation]</h3>
+
+<blockquote>
+<p>定义事务是如何传播的，它描述的是从一个事务方法中调用另一个事务方法时，被调用方法的事务该如何与前面的事务协调，Spring中定义了如下7种规则
+<img src="assets/tm-propagation.png" alt="图示" />
+每一种规则下，它的形为如下表所述：
+<img src="assets/tm-propagation-ref.png" alt="图示" /></p>
+</blockquote>
+
+<h3 id="超时性-timeout">超时性[Timeout]</h3>
+
+<blockquote>
+<p>为了使应用程序很好地运行，事务不能运行太长的时间。因为事务可能涉及对后端数据库的锁定，所以长时间的事务会不必要的占用数据库资源。事务超时就是事务的一个定时器，在特定时间内事务如果没有执行完毕，那么就会自动回滚，而不是一直等待其结束</p>
+</blockquote>
+
+<h3 id="只读性-read-only">只读性(Read Only)</h3>
+
+<blockquote>
+<p>事务的第三个特性是它是否为只读事务。如果事务只对后端的数据库进行该操作，数据库可以利用事务的只读特性来进行一些特定的优化。通过将事务设置为只读，你就可以给数据库一个机会，让它应用它认为合适的优化措施</p>
+</blockquote>
+
+<h3 id="回滚规则-rollback-rule">回滚规则[Rollback Rule]</h3>
+
+<blockquote>
+<p>事务五边形的最后一个方面是一组规则，这些规则定义了哪些异常会导致事务回滚而哪些不会。默认情况下，事务只有遇到运行期异常时才会回滚，而在遇到检查型异常时不会回滚（这一行为与EJB的回滚行为是一致的）
+但是你可以声明事务在遇到特定的检查型异常时像遇到运行期异常那样回滚。同样，你还可以声明事务遇到特定的异常不回滚，即使这些异常是运行期异常。</p>
+</blockquote>
+
+<h2 id="编程式事务">编程式事务</h2>
+
+<blockquote>
+<p>支持两种方式，一是利用PlatformTransactionManager进行编程手动控制事务的提交与回滚，二是利用TransactionTemplate做事务控制，它是基于回调机制。这两种做法都是侵入式的。</p>
+</blockquote>
+
+<h2 id="申明式事务">申明式事务</h2>
+
+<blockquote>
+<p>Spring框架支持XML和注解 两种方式来做申明式事务，下面我们一一讲解。</p>
+</blockquote>
+
+<h3 id="案例的共性内容有">案例的共性内容有：</h3>
+
+<h4 id="基于maven构建一个项目">基于maven构建一个项目</h4>
+
+<h4 id="创建实体类">创建实体类</h4>
+
+<pre><code class="language-java">package com.springdemo.tx.entity;
+
+import java.io.Serializable;
+/**
+ * Created by yejf on 2018/1/30.
+ */
+public class Account implements Serializable {
+    private Integer id;
+    private String name;
+    private double balance;
+    // ... 其它的代码略
+}
+</code></pre>
+
+<h4 id="建表-如果是采用hibernate框架则不需要-本案例使用-jdbctemplate-数据库任意">建表【如果是采用Hibernate框架则不需要,本案例使用 JdbcTemplate, 数据库任意】</h4>
+
+<pre><code class="language-sql">create table tbl_account(
+  id INTEGER auto_increment,
+  name VARCHAR(255),
+  balance DOUBLE,
+  primary key(id)
+) engine=InnoDB default charset=utf8;
+</code></pre>
+
+<h4 id="创建持久层接口">创建持久层接口</h4>
+
+<pre><code class="language-java">package com.springdemo.tx.dao;
+
+import com.springdemo.tx.entity.Account;
+import java.io.Serializable;
+import java.util.List;
+
+public interface AccountDao {
+    void save(Account account);
+    Account findById(Serializable id);
+    List&lt;Account&gt; findAll();
+    void update(Account account);
+    void delete(Serializable id);
+}
+</code></pre>
+
+<h4 id="利用jdbctemplate实现持久层接口-使用-repository注解加入到spring容器管理之中">利用JdbcTemplate实现持久层接口 【使用@Repository注解加入到Spring容器管理之中】</h4>
+
+<pre><code class="language-java">package com.springdemo.tx.dao.impl;
+
+import com.springdemo.tx.dao.AccountDao;
+import com.springdemo.tx.entity.Account;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+@Repository
+public class AccountDaoImpl implements AccountDao {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Override
+    public void save(Account account) {
+        if(account != null) {
+            String sql = &quot;insert into tbl_account(name,balance) values(?,?)&quot;;
+            jdbcTemplate.update(sql, account.getName(), account.getBalance());
+        }
+        //模拟一个异常 [出现运行时异常，事务将会回滚]
+        if(Math.random() &lt; 0.5) {
+            throw new RuntimeException(&quot;Random Exception&quot;);
+        }
+    }
+    @Override
+    public Account findById(Serializable id) {
+        if(id != null) {
+            RowMapper&lt;Account&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Account.class);
+            String sql = &quot;select * FROM tbl_account where id = ?&quot;;
+            return jdbcTemplate.queryForObject(sql, rowMapper, id);
+        }
+        return null;
+    }
+    @Override
+    public List&lt;Account&gt; findAll() {
+        RowMapper&lt;Account&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Account.class);
+        String sql  =  &quot;select * from tbl_account&quot;;
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+    @Override
+    public void update(Account account) {
+        if(account != null &amp;&amp; account.getId() != null) {
+            String sql = &quot;update tbl_account set name = ?,balance = ? where id = ?&quot;;
+            jdbcTemplate.update(sql, account.getName(), account.getBalance(), account.getId());
+        }
+    }
+    @Override
+    public void delete(Serializable id) {
+        if(id != null) {
+            String sql = &quot;delete from tbl_account where id = ?&quot;;
+            jdbcTemplate.update(sql, id);
+        }
+    }
+}
+</code></pre>
+
+<h4 id="创建业务层接口">创建业务层接口</h4>
+
+<pre><code class="language-java">package com.springdemo.tx.service;
+
+import com.springdemo.tx.entity.Account;
+
+public interface AccountService {
+ 
+    int deposit(Account account, double money);
+
+    int withdraw(Account account, double money);
+
+    /*******
+     * 转帐
+     * @param from
+     * @param to
+     * @param money
+     * @return
+     */
+    int transfer(Account from, Account to, double money);
+}
+</code></pre>
+
+<h4 id="基于持久层实现业务层接口-使用-service注解加入到spring容器管理之中">基于持久层实现业务层接口【使用@Service注解加入到Spring容器管理之中】</h4>
+
+<pre><code class="language-java">package com.springdemo.tx.service.impl;
+
+import com.springdemo.tx.dao.AccountDao;
+import com.springdemo.tx.entity.Account;
+import com.springdemo.tx.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AccountServiceImpl implements AccountService {
+    @Autowired
+    private AccountDao accountDao;
+    @Override
+    public int deposit(Account account, double money) {
+        //首先，判断这个帐户是否存在
+        Account targetAccount = accountDao.findById(account.getId());
+        if(targetAccount == null) {
+            return -1;  //目标帐户不存在
+        }
+        //存在的话，执行更新操作
+        targetAccount.setBalance(targetAccount.getBalance() + money);
+        accountDao.update(targetAccount);
+        // 如要模拟出异常，可以把下面的代码注释打开，观察事务是否回滚了
+        //throw new RuntimeException(&quot;故意抛出一个运行时异常&quot;);
+        return 1;
+    }
+    @Override
+    public int withdraw(Account account, double money) {
+        //首先，判断这个帐户是否存在
+        Account targetAccount = accountDao.findById(account.getId());
+        if(targetAccount == null) {
+            return -1;  //目标帐户不存在
+        }
+        //再判断余额是否足够
+        if(targetAccount.getBalance() &lt; money) {
+            //余额不足
+            return -1;
+        }
+        //存在的话，执行更新操作
+        targetAccount.setBalance(targetAccount.getBalance() - money);
+        accountDao.update(targetAccount);
+        return 1;
+    }
+    @Override
+    public int transfer(Account from, Account to, double money) {
+        //首先，判断源帐户是否存在
+        Account fromAcct = accountDao.findById(from.getId());
+        if(fromAcct == null) {
+            System.out.println(&quot;源帐户不存在&quot;);
+            return -1;
+        }
+        //其次，判断目标帐户是否存在
+        Account targetAcct = accountDao.findById(to.getId());
+        if(targetAcct == null) {
+            System.out.println(&quot;目标帐户不存在.&quot;);
+            return -1;
+        }
+        //最后，再判断源帐户的余额是否足够
+        if(fromAcct.getBalance() &lt; money) {
+            System.out.println(&quot;源帐户余额不足.&quot;);
+            return -1;
+        }
+        //执行业务: 更新源帐户
+        fromAcct.setBalance(fromAcct.getBalance() - money);
+        accountDao.update(fromAcct);
+
+        //模拟一个随机异常
+        randomException();
+
+        //更新目标帐户
+        targetAcct.setBalance(targetAcct.getBalance() + money);
+        accountDao.update(targetAcct);
+        //
+        return 1;
+    }
+	//模拟生成一个运行时异常，为配合测试，也可以改成已检查异常
+    private void randomException() {
+        int i = (int)(Math.random() * 100);
+        if(i % 2 == 0) {
+            throw new RuntimeException(&quot;随机异常...&quot;);
+        }
+    }
+}
+</code></pre>
+
+<h4 id="单元测试-基于junit或testng做单元测试">单元测试【基于junit或testng做单元测试】</h4>
+
+<pre><code class="language-java">package com.springdemo.tx.dao;
+
+import com.springdemo.tx.entity.Account;
+import com.springdemo.tx.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.Test;
+
+@ContextConfiguration(locations = &quot;classpath:applicationContext.xml&quot;)
+public class AccountServiceTest extends AbstractTestNGSpringContextTests {
+    @Autowired
+    private AccountService accountService;
+    @Test
+    public void testWithdraw() {
+        Account a = new Account();
+        a.setId(1);
+        //
+        int result = accountService.withdraw(a, 1300);
+        if(result == 1) {
+            System.out.println(&quot;取钱成功&quot;);
+        } else {
+            System.out.println(&quot;取钱失败&quot;);
+        }
+    }
+    @Test
+    public void testTransfer() {
+        Account from = new Account();
+        from.setId(1);
+        Account to = new Account();
+        to.setId(2);
+        //
+        int result = accountService.transfer(from, to, 200);
+        //
+        if(result == 1) {
+            System.out.println(&quot;转帐成功&quot;);
+        } else {
+            System.out.println(&quot;转帐失败&quot;);
+        }
+    }
+}
+</code></pre>
+
+<h3 id="xml配置申明式事务">xml配置申明式事务</h3>
+
+<blockquote>
+<p>在<code>applicationContext.xml</code>中做如下配置.
+<strong>applicationContext.xml</strong></p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd&quot;&gt;
+	&lt;!-- 指定要扫描的基包 --&gt;
+    &lt;context:component-scan base-package=&quot;com.springdemo.tx&quot;/&gt;
+    &lt;!-- 引入外部的属性文件 --&gt;
+    &lt;context:property-placeholder location=&quot;classpath:db.properties&quot;/&gt;
+    &lt;!-- 配置DataSource的Bean --&gt;
+    &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;
+        &lt;property name=&quot;driverClassName&quot; value=&quot;${driverClassName}&quot;/&gt;
+        &lt;property name=&quot;url&quot; value=&quot;${url}&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;${password}&quot;/&gt;
+        &lt;property name=&quot;username&quot; value=&quot;${username}&quot;/&gt;
+        &lt;property name=&quot;initialSize&quot; value=&quot;${initialSize}&quot; /&gt;
+    &lt;/bean&gt;
+    &lt;!-- 配置JdbcTemplate, 为Dao使用 --&gt;
+    &lt;bean id=&quot;jdbcTemplate&quot; class=&quot;org.springframework.jdbc.core.JdbcTemplate&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;!-- 配置事务管理器: 为申明式事务 使用 --&gt;
+    &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;!-- 指定事务切面 --&gt;
+    &lt;tx:advice id=&quot;txAdvice&quot; transaction-manager=&quot;transactionManager&quot;&gt;
+        &lt;tx:attributes&gt;
+            &lt;!-- 根据方法名来切入是否需要织入事务 --&gt;
+            &lt;tx:method name=&quot;save&quot; isolation=&quot;READ_COMMITTED&quot; propagation=&quot;REQUIRED&quot;/&gt;
+            &lt;tx:method name=&quot;update&quot; isolation=&quot;READ_COMMITTED&quot; propagation=&quot;REQUIRED&quot; timeout=&quot;-1&quot;/&gt;
+            &lt;!-- 业务方法 --&gt;
+            &lt;tx:method name=&quot;transfer&quot; isolation=&quot;READ_COMMITTED&quot; propagation=&quot;REQUIRED&quot;/&gt;
+            &lt;!-- 支持方法名通配 --&gt;
+            &lt;tx:method name=&quot;find*&quot; read-only=&quot;true&quot;/&gt;
+            &lt;tx:method name=&quot;get*&quot; read-only=&quot;true&quot;/&gt;
+        &lt;/tx:attributes&gt;
+    &lt;/tx:advice&gt;
+    &lt;!-- 通过aop把事务切面织入到目标类中 --&gt;
+    &lt;aop:config&gt;
+        &lt;aop:pointcut id=&quot;txServicePointCut&quot; expression=&quot;execution(* com.springdemo.tx.service.*.*(..))&quot;/&gt;
+        &lt;aop:advisor advice-ref=&quot;txAdvice&quot; pointcut-ref=&quot;txServicePointCut&quot;/&gt;
+    &lt;/aop:config&gt;
+&lt;/beans&gt;
+</code></pre>
+
+<p>注：db.properties 文件此处不再给出。</p>
+</blockquote>
+
+<h3 id="注解配置申明式事务">注解配置申明式事务</h3>
+
+<blockquote>
+<p>注解配置相比xml配置来说，只需要把<code>applicationContext.xml</code>文件中的事务切面和AOP织入部份去掉，然后，加上<code>&lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot;/&gt;</code>这句话 来启动事务注解。
+现在，我们修改后的 applicationContext.xml如下：</p>
+</blockquote>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd&quot;&gt;
+	&lt;!-- 指定要扫描的基包 --&gt;
+    &lt;context:component-scan base-package=&quot;com.springdemo.tx&quot;/&gt;
+    &lt;!-- 引入外部的属性文件 --&gt;
+    &lt;context:property-placeholder location=&quot;classpath:db.properties&quot;/&gt;
+    &lt;!-- 配置DataSource的Bean --&gt;
+    &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;
+        &lt;property name=&quot;driverClassName&quot; value=&quot;${driverClassName}&quot;/&gt;
+        &lt;property name=&quot;url&quot; value=&quot;${url}&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;${password}&quot;/&gt;
+        &lt;property name=&quot;username&quot; value=&quot;${username}&quot;/&gt;
+        &lt;property name=&quot;initialSize&quot; value=&quot;${initialSize}&quot; /&gt;
+    &lt;/bean&gt;
+    &lt;!-- 配置JdbcTemplate, 为Dao使用 --&gt;
+    &lt;bean id=&quot;jdbcTemplate&quot; class=&quot;org.springframework.jdbc.core.JdbcTemplate&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;!-- 配置事务管理器: 为申明式事务 使用 --&gt;
+    &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+	&lt;!-- 启用事务注解 --&gt;
+    &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot;/&gt;
+    &lt;!-- 启动AOP --&gt;
+    &lt;aop:aspectj-autoproxy/&gt;
+&lt;/beans&gt;
+</code></pre>
+
+<p>然后，在你要添加事务的Dao实现类或业务实现类中，使用@Transactional 注解即可，这个注解也可以添加在方法上面，用法介绍如下：</p>
+
+<h4 id="transactional注解">@Transactional注解</h4>
+
+<p><img src="assets/transactional.png" alt="图示" /></p>
+
+<p><strong>用法</strong>
+&gt; @Transactional 可以作用于接口、接口方法、类以及类方法上。当作用于类上时，该类的所有 public 方法将都具有该类型的事务属性，同时，我们也可以在方法级别使用该标注来覆盖类级别的定义。
+&gt; 虽然 @Transactional 注解可以作用于接口、接口方法、类以及类方法上，但是 Spring 建议不要在接口或者接口方法上使用该注解，因为这只有在使用基于接口的代理时它才会生效。另外， @Transactional 注解应该只被应用到 public 方法上，这是由 Spring AOP 的本质决定的。如果你在 protected、private 或者默认可见性的方法上使用 @Transactional 注解，这将被忽略，也不会抛出任何异常。</p>
+
+<p><strong>上面的例子可以改写为</strong></p>
+
+<pre><code class="language-java">@Service
+public class AccountServiceImpl implements AccountService {
+    @Autowired
+    private AccountDao accountDao;
+ 	@Override
+ 	//直接在需要添加事务的方法上使用注解即可，这样xml的配置就可以大大简化
+    @Transactional(
+            isolation = Isolation.READ_COMMITTED,
+            propagation = Propagation.REQUIRED,
+            readOnly = false,
+            timeout = -1,
+            rollbackFor = {RuntimeException.class,Error.class}
+    )
+    public int transfer(Account from, Account to, double money) {
+        //首先，判断源帐户是否存在
+        Account fromAcct = accountDao.findById(from.getId());
+        if(fromAcct == null) {
+            System.out.println(&quot;源帐户不存在&quot;);
+            return -1;
+        }
+        //其次，判断目标帐户是否存在
+        Account targetAcct = accountDao.findById(to.getId());
+        if(targetAcct == null) {
+            System.out.println(&quot;目标帐户不存在.&quot;);
+            return -1;
+        }
+        //最后，再判断源帐户的余额是否足够
+        if(fromAcct.getBalance() &lt; money) {
+            System.out.println(&quot;源帐户余额不足.&quot;);
+            return -1;
+        }
+        //执行业务: 更新源帐户
+        fromAcct.setBalance(fromAcct.getBalance() - money);
+        accountDao.update(fromAcct);
+
+        //模拟一个随机异常
+        randomException();
+
+        //更新目标帐户
+        targetAcct.setBalance(targetAcct.getBalance() + money);
+        accountDao.update(targetAcct);
+
+        //
+        return 1;
+    }
+
+    private void randomException() {
+        int i = (int)(Math.random() * 100);
+        if(i % 2 == 0) {
+            throw new RuntimeException(&quot;随机异常...&quot;);
+        }
+    }
+
+}
+</code></pre>
+
+<h3 id="小结">小结</h3>
+
+<blockquote>
+<p>建议启用注解的方式来使用申明式事务</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

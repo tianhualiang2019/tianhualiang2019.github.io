@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title> // Ray的个人博客</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Ray" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://tianhualiang2019.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="SpringBoot配置 1、配置文件 SpringBoot使用一个全局配置文件，配置文件名是固定的； - application.propertie - application.yml
+配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好了；
+ YAML( YAML Ain&rsquo;t Makeup language) ：它是类似于标准通用标记语言的子集XML的数据描述语言，语法比XML简单很多
+以前的配置文件：大多数都使用的是 xxx.xml文件；
+YAML:以数据为中心，比json、xml等更适合做配置文件；
+YAML:配置例子
+server: port: 8081  XML:配置例子
+&lt;server&gt; &lt;port&gt;8081&lt;/port&gt; &lt;/server&gt;  2、YAML语法 1、基本语法 k:(空格)v :表示一对键值对（空格必须有）
+ 属性和值是大小写敏感的
+以空格的缩进来控制层级关系：只要是左对齐的一列数据，都是同一个层级的
+server: port: 8081 path: /hello  2、值的写法 字面量：普通的值（数字、字符串、布尔） k: v :字面直接来写； 字符串默认不用加上单引号或者双引号 &quot;&quot;:双引号，不会转义字符串里面的特殊字符，特殊字符会作为本身想表示的意思 name：&quot;zhangsan \n lisi&quot; 输出：zhangsan 换行 lisi &quot;&quot;:单引号，会转义字符串里面的特殊字符，特殊字符最终只是一个普通的字符串数据 name：&quot;zhangsan \n lisi&quot; 输出：zhangsan \n lisi  对象、Map(属性值)(键值对)： k: v :在下一行来写对象的属性和值的关系；注意缩进  friends: lastName: zhangsan age: 20  行内写法："/>
+
+    <meta property="og:title" content="" />
+<meta property="og:description" content="SpringBoot配置 1、配置文件 SpringBoot使用一个全局配置文件，配置文件名是固定的； - application.propertie - application.yml
+配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好了；
+ YAML( YAML Ain&rsquo;t Makeup language) ：它是类似于标准通用标记语言的子集XML的数据描述语言，语法比XML简单很多
+以前的配置文件：大多数都使用的是 xxx.xml文件；
+YAML:以数据为中心，比json、xml等更适合做配置文件；
+YAML:配置例子
+server: port: 8081  XML:配置例子
+&lt;server&gt; &lt;port&gt;8081&lt;/port&gt; &lt;/server&gt;  2、YAML语法 1、基本语法 k:(空格)v :表示一对键值对（空格必须有）
+ 属性和值是大小写敏感的
+以空格的缩进来控制层级关系：只要是左对齐的一列数据，都是同一个层级的
+server: port: 8081 path: /hello  2、值的写法 字面量：普通的值（数字、字符串、布尔） k: v :字面直接来写； 字符串默认不用加上单引号或者双引号 &quot;&quot;:双引号，不会转义字符串里面的特殊字符，特殊字符会作为本身想表示的意思 name：&quot;zhangsan \n lisi&quot; 输出：zhangsan 换行 lisi &quot;&quot;:单引号，会转义字符串里面的特殊字符，特殊字符最终只是一个普通的字符串数据 name：&quot;zhangsan \n lisi&quot; 输出：zhangsan \n lisi  对象、Map(属性值)(键值对)： k: v :在下一行来写对象的属性和值的关系；注意缩进  friends: lastName: zhangsan age: 20  行内写法：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tianhualiang2019.github.io/post/springboot%E9%85%8D%E7%BD%AE/" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://tianhualiang2019.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="Ray" /></a>
+      <h1>Ray的个人博客</h1>
+      <p>Do you want to spend the rest of your life selling sugared water or do you want a chance to change the world?</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/tianhualiang2019"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://gitee.com/ray_thl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://goldenaarcher.github.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+          <a target="_blank" href="http://wvincen.gitee.io/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title"></h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 1, 0001
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="springboot配置">SpringBoot配置</h1>
+
+<h2 id="1-配置文件">1、配置文件</h2>
+
+<p>SpringBoot使用一个全局配置文件，配置文件名是固定的；
+- application.propertie
+- application.yml</p>
+
+<p>配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好了；</p>
+
+<blockquote>
+<p>YAML( YAML Ain&rsquo;t Makeup language) ：它是类似于标准通用标记语言的子集XML的数据描述语言，语法比XML简单很多</p>
+
+<p>以前的配置文件：大多数都使用的是 xxx.xml文件；</p>
+
+<p>YAML:以数据为中心，比json、xml等更适合做配置文件；</p>
+
+<p>YAML:配置例子</p>
+
+<pre><code class="language-yml">server:
+  port: 8081
+</code></pre>
+
+<p>XML:配置例子</p>
+
+<pre><code class="language-xml">&lt;server&gt;
+    &lt;port&gt;8081&lt;/port&gt;
+&lt;/server&gt;
+</code></pre>
+
+<h2 id="2-yaml语法">2、YAML语法</h2>
+
+<h3 id="1-基本语法">1、基本语法</h3>
+
+<p>k:(空格)v  :表示一对键值对（空格必须有）</p>
+</blockquote>
+
+<p>属性和值是大小写敏感的</p>
+
+<p>以空格的缩进来控制层级关系：只要是左对齐的一列数据，都是同一个层级的</p>
+
+<pre><code class="language-yml">server:
+  port: 8081
+  path: /hello
+</code></pre>
+
+<h3 id="2-值的写法">2、值的写法</h3>
+
+<h4 id="字面量-普通的值-数字-字符串-布尔">字面量：普通的值（数字、字符串、布尔）</h4>
+
+<pre><code>k: v :字面直接来写；
+    字符串默认不用加上单引号或者双引号
+    &quot;&quot;:双引号，不会转义字符串里面的特殊字符，特殊字符会作为本身想表示的意思
+        name：&quot;zhangsan \n lisi&quot; 输出：zhangsan 换行 lisi
+     &quot;&quot;:单引号，会转义字符串里面的特殊字符，特殊字符最终只是一个普通的字符串数据
+        name：&quot;zhangsan \n lisi&quot; 输出：zhangsan \n lisi 
+</code></pre>
+
+<h4 id="对象-map-属性值-键值对">对象、Map(属性值)(键值对)：</h4>
+
+<pre><code>k: v :在下一行来写对象的属性和值的关系；注意缩进
+</code></pre>
+
+<pre><code class="language-yml">friends:
+    lastName: zhangsan
+    age: 20
+</code></pre>
+
+<p>行内写法：</p>
+
+<pre><code class="language-yml">friends: {lastName: zhangsan,age: 20}
+</code></pre>
+
+<h4 id="数组-list-set">数组（List、set）:</h4>
+
+<p>用“ -空格 ”表示数组中的一个元素</p>
+
+<pre><code class="language-yml">pets:
+  - cat
+  - dog
+  - pig
+</code></pre>
+
+<p>行内写法：</p>
+
+<pre><code class="language-yml">pets: [cat,dog,pig]
+</code></pre>
+
+<h2 id="3-配置文件值注入">3、配置文件值注入</h2>
+
+<p>### 1、配置文件
+ 配置文件yml或者properties他们都能获取到值</p>
+
+<p>yml格式的配置文件application.yml</p>
+
+<pre><code class="language-yml">person:
+  lastName: zhangsann 
+  age: 18
+  boss: false
+  birth: 2017/09/08
+  maps: {k1: v1,k2: v2}
+  lists:
+    - lisi
+    - zhaoliu
+  dog:
+    name: dog
+    age: 12
+
+*注意：lastName和last-name两种写法都可以
+</code></pre>
+
+<p>properties格式的配置文件application.properties</p>
+
+<pre><code class="language-properties">#idea使用的是utf-8
+#配置person的值
+person.age=18
+person.last-name=张三
+person.boss=false
+person.birth=2018/12/23
+person.maps.k1=v1
+person.maps.k2=13
+person.lists=cat,dog,pig
+person.dog.name=dog
+person.dog.age=12
+
+注意：若中文出现乱码，将properties的编码格式改为utf-8
+</code></pre>
+
+<p>javabean</p>
+
+<pre><code class="language-java">/*将配置文件中配置的每一个属性的值，映射到这个组件中
+@ConfigurationProperties：告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定；
+          prefix = &quot;person&quot;:配置文件中哪个下面的所有属性进行一一映射
+*/
+@Component
+@ConfigurationProperties(prefix = &quot;person&quot;)
+public class Person {
+    private String lastName;
+    private Integer age;
+    private Boolean boss;
+    private Date birth;
+    private Map&lt;String,Object&gt; maps;
+    private List&lt;Object&gt; lists;
+    private Dog dog;
+</code></pre>
+
+<p>我们可以导入配置文件处理器，以后编写配置文件就有提示了。</p>
+
+<pre><code class="language-xml">&lt;!--导入配置文件处理器，配置文件进行绑定就会有提示--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-configuration-processor&lt;artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+</code></pre>
+
+<h3 id="2-value和-configurationproperties获取值比较">2、@value和@configurationproperties获取值比较</h3>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>@ConfigurationProperties</th>
+<th>@Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>功能</td>
+<td>批量注入配置文件中的属性</td>
+<td>一个个注入</td>
+</tr>
+
+<tr>
+<td>松散绑定（松散语法）</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+
+<tr>
+<td>SpEL</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+
+<tr>
+<td>JSR303数据校验</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+
+<tr>
+<td>复杂类型封装</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p>如果说，我们只是在某个业务逻辑中需要获取一下配置文件中的某项值，使用@Value;</p></li>
+
+<li><p>如果说，我们专门编写了一个javaBean来和配置文件进行映射，我们就直接使用@ConfigurationProperties;</p></li>
+</ul>
+
+<h3 id="3-配置文件注入值数据校验-jsr303数据校验">3、配置文件注入值数据校验（JSR303数据校验）</h3>
+
+<pre><code class="language-java">@Component
+@ConfigurationProperties(prefix = &quot;person&quot;) //默认从全局配置文件中获取值
+
+@Validated //验证注解
+public class Person {
+
+    //lastName的格式必须是Email格式
+    @Email
+    private String lastName;
+
+    private Integer age;
+    private Boolean boss;
+    private Date birth;
+    private Map&lt;String,Object&gt; maps;
+    private List&lt;Object&gt; lists;
+    private Dog dog;
+</code></pre>
+
+<h3 id="4-propertysource-importresource">4、@PropertySource &amp; @ImportResource</h3>
+
+<ul>
+<li>@ConfigurationProperties(prefix = &ldquo;person&rdquo;) //默认从全局配置文件中获取值</li>
+<li>@PropertySource(value={classpath:person.properties}) //加载指定的配置文件。</li>
+<li>@ImportResource</li>
+</ul>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
