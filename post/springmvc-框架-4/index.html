@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title> // Ray的个人博客</title>
+    <title>拦截器、验证器的使用 // Ray的个人博客</title>
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.55.6" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,7 +11,7 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
+<meta name="twitter:title" content="拦截器、验证器的使用"/>
 <meta name="twitter:description" content="SpringMVC 框架 拦截器[Interceptor]  主要是针对SpringMVC框架中的控制器进行拦截
  使用Interceptor的步骤  ###### 编写一个 拦截器类，需要实现 HandlerInterceptor , 或者 继承 HandlerInterceptorAdapter类  这个接口有三个方法
  preHandle 方法, 在执行目标Handler【小C控制器中的某个方法】之前 被调用 postHandle 方法, 在执行目标Handler【小C控制器中的某个方法】之后，但是在View被渲染之前 afterCompletion 方法，也就是请求完成【VIEW被渲染】后执行  注：我们可以根据需要来决定重写哪个方法，不是所有方法都要重写的。
@@ -21,7 +21,7 @@
  配置了多个拦截器后，此处假设我们有 Interceptor1, 和 Interceptor2, 它们的执行顺序：
  Interceptor1.preHandle() Interceptor2.preHandle() 执行目标的Handler【也就是控制器的目标方法】 Interceptor2.postHandle() Interceptor1.postHandle() 渲染视图后 Interceptor2.afterCompletion() Interceptor1.afterCompletion()   注："/>
 
-    <meta property="og:title" content="" />
+    <meta property="og:title" content="拦截器、验证器的使用" />
 <meta property="og:description" content="SpringMVC 框架 拦截器[Interceptor]  主要是针对SpringMVC框架中的控制器进行拦截
  使用Interceptor的步骤  ###### 编写一个 拦截器类，需要实现 HandlerInterceptor , 或者 继承 HandlerInterceptorAdapter类  这个接口有三个方法
  preHandle 方法, 在执行目标Handler【小C控制器中的某个方法】之前 被调用 postHandle 方法, 在执行目标Handler【小C控制器中的某个方法】之后，但是在View被渲染之前 afterCompletion 方法，也就是请求完成【VIEW被渲染】后执行  注：我们可以根据需要来决定重写哪个方法，不是所有方法都要重写的。
@@ -69,7 +69,7 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title"></h1>
+      <h1 class ="post-title">拦截器、验证器的使用</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">

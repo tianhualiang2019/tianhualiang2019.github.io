@@ -12,6 +12,20 @@
     
     
     <item>
+      <title>Mybatis一对一、一对多、多对多查询</title>
+      <link>https://tianhualiang2019.github.io/post/03.mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/03.mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2/</guid>
+      <description>Mybatis一对一、一对多、多对多查询 场景：使用三张数据表：student学生表、teacher教师表、position职位表 一个学生可以有多为老师、一位老师可以有多个学生、但是一个老师只能有一个职位：教授、副教授、讲师；但是一个职位可以有多个老师：例如教授可以多人
+这里则产生了：
+一对一关系，从老师角度：老师对职位一对一
+一对多关系，从职位角度：职位对老师一对多
+多对多关系：查找被教授教导的所有学生（首先职位对老师一对多，老师再对学生再对多、这里便有了一对多对多）
+数据表： 老师表 CREATE TABLE `tb_teacher` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_no` varchar(20) DEFAULT NULL, `t_name` varchar(20) DEFAULT NULL, `position_id` int(11) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8; /*Data for the table `tb_teacher` */ insert into `tb_teacher`(`id`,`t_no`,`t_name`,`position_id`) values (1,&#39;163314001&#39;,&#39;张文远&#39;,1), (2,&#39;163314002&#39;,&#39;赵传智&#39;,1), (3,&#39;163314003&#39;,&#39;风清扬&#39;,2), (4,&#39;163314004&#39;,&#39;王汇智&#39;,2), (5,&#39;163314005&#39;,&#39;汪思远&#39;,3);  学生表 CREATE TABLE `tb_student` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_stu_name` varchar(20) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8; /*Data for the table `tb_student` */ insert into `tb_student`(`id`,`t_stu_name`) values (1,&#39;赵依&#39;), (2,&#39;钱迩&#39;), (3,&#39;张山&#39;), (4,&#39;李石&#39;), (5,&#39;王武&#39;), (6,&#39;马柳&#39;);  职位表 CREATE TABLE `tb_position` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_pos_name` varchar(20) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8; /*Data for the table `tb_position` */ insert into `tb_position`(`id`,`t_pos_name`) values (1,&#39;教授&#39;), (2,&#39;副教授&#39;), (3,&#39;讲师&#39;);  最后是教师学生关系表 CREATE TABLE `tb_stu_teach` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_stu_id` int(11) DEFAULT NULL, `t_teach_id` int(11) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8; /*Data for the table `tb_stu_teach` */ insert into `tb_stu_teach`(`id`,`t_stu_id`,`t_teach_id`) values (1,1,1), (2,1,2), (3,1,3), (4,2,2), (5,2,3), (6,2,4), (7,3,3), (8,3,4), (9,3,5), (10,4,4), (11,4,5), (12,4,1);  最后在eclipse中的目录结构如下： 希望您明白sqlMapConfig该如何配置，以及jdbc.</description>
+    </item>
+    
+    <item>
       <title>SpringBoot入门</title>
       <link>https://tianhualiang2019.github.io/post/springboot%E5%85%A5%E9%97%A8/</link>
       <pubDate>Sat, 08 Jun 2019 00:00:00 +0000</pubDate>
@@ -76,21 +90,7 @@ Spring框架介绍  首先，我们给框架[framework]给一个定义：**针�
     </item>
     
     <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/03.mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/03.mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2/</guid>
-      <description>Mybatis一对一、一对多、多对多查询 场景：使用三张数据表：student学生表、teacher教师表、position职位表 一个学生可以有多为老师、一位老师可以有多个学生、但是一个老师只能有一个职位：教授、副教授、讲师；但是一个职位可以有多个老师：例如教授可以多人
-这里则产生了：
-一对一关系，从老师角度：老师对职位一对一
-一对多关系，从职位角度：职位对老师一对多
-多对多关系：查找被教授教导的所有学生（首先职位对老师一对多，老师再对学生再对多、这里便有了一对多对多）
-数据表： 老师表 CREATE TABLE `tb_teacher` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_no` varchar(20) DEFAULT NULL, `t_name` varchar(20) DEFAULT NULL, `position_id` int(11) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8; /*Data for the table `tb_teacher` */ insert into `tb_teacher`(`id`,`t_no`,`t_name`,`position_id`) values (1,&#39;163314001&#39;,&#39;张文远&#39;,1), (2,&#39;163314002&#39;,&#39;赵传智&#39;,1), (3,&#39;163314003&#39;,&#39;风清扬&#39;,2), (4,&#39;163314004&#39;,&#39;王汇智&#39;,2), (5,&#39;163314005&#39;,&#39;汪思远&#39;,3);  学生表 CREATE TABLE `tb_student` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_stu_name` varchar(20) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8; /*Data for the table `tb_student` */ insert into `tb_student`(`id`,`t_stu_name`) values (1,&#39;赵依&#39;), (2,&#39;钱迩&#39;), (3,&#39;张山&#39;), (4,&#39;李石&#39;), (5,&#39;王武&#39;), (6,&#39;马柳&#39;);  职位表 CREATE TABLE `tb_position` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_pos_name` varchar(20) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8; /*Data for the table `tb_position` */ insert into `tb_position`(`id`,`t_pos_name`) values (1,&#39;教授&#39;), (2,&#39;副教授&#39;), (3,&#39;讲师&#39;);  最后是教师学生关系表 CREATE TABLE `tb_stu_teach` ( `id` int(11) NOT NULL AUTO_INCREMENT, `t_stu_id` int(11) DEFAULT NULL, `t_teach_id` int(11) DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8; /*Data for the table `tb_stu_teach` */ insert into `tb_stu_teach`(`id`,`t_stu_id`,`t_teach_id`) values (1,1,1), (2,1,2), (3,1,3), (4,2,2), (5,2,3), (6,2,4), (7,3,3), (8,3,4), (9,3,5), (10,4,4), (11,4,5), (12,4,1);  最后在eclipse中的目录结构如下： 希望您明白sqlMapConfig该如何配置，以及jdbc.</description>
-    </item>
-    
-    <item>
-      <title></title>
+      <title>Ajax前后台传值的问题</title>
       <link>https://tianhualiang2019.github.io/post/ajax%E5%89%8D%E5%90%8E%E5%8F%B0%E4%BC%A0%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -104,24 +104,44 @@ function getData2() { $.ajax({ url:&#39;data/getMap&#39;, success:function(resul
     </item>
     
     <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/springboot/</link>
+      <title>Spring验证器</title>
+      <link>https://tianhualiang2019.github.io/post/spring-validation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://tianhualiang2019.github.io/post/springboot/</guid>
-      <description>一、SpringBoot入门 1、SpringBoot简介  简化Spring应用开发的一个框架
-整个Spring技术栈的一个大整合
-javaEE开发的一站式解决方案
-2、微服务 2014,martin fowler
- 微服务：架构风格（服务微化）
-一个应用应该是一组小型服务；可以通过HTTP的方式进行互通
-每一个功能元素最终都是一个可独立替换和独立升级的软件单元；
-3、SpringBoot HelloWorld 功能：浏览器发送hello请求，服务器接受请求并处理，响应HelloWorld字符串
-1、创建一个maven工程；（jar） 2、导入springboot的依赖  &amp;lt;!--SpringBoot的版本仲裁中心，以后我们导入依赖默认是不需要写版本的--&amp;gt; &amp;lt;parent&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-parent&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.5.9.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/parent&amp;gt; &amp;lt;!--启动不同类型的项目，导入相应的starter依赖即可，此处是web应用，导入spring-boot-starter-web--&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt;  3、编写一个主程序:启动SpringBoot /* * @SpringBootApplication标注一个主程序类，说明这是一个SpringBoot应用。 */ @SpringBootApplication public class HelloWorldApplication { public static void main(String[] args) { //spring应用启动起来，run方法的参数为@SpringBootApplication注解的类。 SpringApplication.run(HelloWorldApplication.class,args); } }  4、编写一个相关的Controller、Service @Controller public class HelloController { @ResponseBody @RequestMapping(&amp;quot;/hello&amp;quot;) public String hello(){ return &amp;quot;Hello World&amp;quot;; } }  直接运行main方法，启动SpringBoot,浏览器发送hello请求，即可访问</description>
+      <guid>https://tianhualiang2019.github.io/post/spring-validation/</guid>
+      <description>Spring Validation JSR-303 简介 JSR-303 是 JavaEE 6 中的一项子规范，叫做 Bean Validation，官方参考实现是 Hibernate Validator。
+此实现与 Hibernate ORM 没有任何关系。JSR-303 用于对 Java Bean 中的字段的值进行验证。 Spring MVC 3.x 之中也大力支持 JSR-303，可以在控制器中使用注解的方式对表单提交的数据方便地验证。
+Spring 4.0 开始支持 Bean Validation 功能。
+JSR-303 基本的校验规则 空检查  @Null 验证对象是否为 null @NotNull 验证对象是否不为 null, 无法查检长度为 0 的字符串 @NotBlank 检查约束字符串是不是 Null 还有被 Trim 的长度是否大于 0,只对字符串,且会去掉前后空格 @NotEmpty 检查约束元素是否为 NULL 或者是 EMPTY  布尔检查  @AssertTrue 验证 Boolean 对象是否为 true @AssertFalse 验证 Boolean 对象是否为 false  长度检查  @Size(min=, max=) 验证对象（Array, Collection , Map, String）长度是否在给定的范围之内 @Length(min=, max=) 验证字符串长度介于 min 和 max 之间  日期检查  @Past 验证 Date 和 Calendar 对象是否在当前时间之前，验证成立的话被注释的元素一定是一个过去的日期 @Future 验证 Date 和 Calendar 对象是否在当前时间之后 ，验证成立的话被注释的元素一定是一个将来的日期  正则检查  @Pattern 验证 String 对象是否符合正则表达式的规则，被注释的元素符合制定的正则表达式 regexp：正则表达式 flags：指定 Pattern.</description>
     </item>
     
     <item>
-      <title></title>
+      <title>springMVC-1</title>
+      <link>https://tianhualiang2019.github.io/post/springmvc-1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/springmvc-1/</guid>
+      <description>SpringMVC框架 基本流程  基于maven构建一个WEB项目【直接使用现有的maven web项目模板】
+ 在pom.xml中，加入spring mvc的依赖，它的名字：spring-webmvc
+ 配置web.xml文件，这个文件的内容主要是配置SpringMVC前置控制器DispatcherServlet,如下：
+  &amp;lt;!-- spring mvc 主控制器 --&amp;gt; &amp;lt;servlet&amp;gt; &amp;lt;servlet-name&amp;gt;DispatcherServlet&amp;lt;/servlet-name&amp;gt; &amp;lt;servlet-class&amp;gt;org.springframework.web.servlet.DispatcherServlet&amp;lt;/servlet-class&amp;gt; &amp;lt;init-param&amp;gt; &amp;lt;param-name&amp;gt;contextClass&amp;lt;/param-name&amp;gt; &amp;lt;!-- 启动解注类来使用spring mvc的配置 --&amp;gt; &amp;lt;param-value&amp;gt;org.springframework.web.context.support.AnnotationConfigWebApplicationContext&amp;lt;/param-value&amp;gt; &amp;lt;/init-param&amp;gt; &amp;lt;init-param&amp;gt; &amp;lt;param-name&amp;gt;contextConfigLocation&amp;lt;/param-name&amp;gt; &amp;lt;!-- 告诉SpringMVC的前置控制器，我们的配置类在哪里，下面写的就是配置类的全限定名 --&amp;gt; &amp;lt;param-value&amp;gt;com.hcedu.springdemo.config.WebMvcConfig&amp;lt;/param-value&amp;gt; &amp;lt;/init-param&amp;gt; &amp;lt;!-- 表示此Servlet中容器启动时，就初始化，不用等到第一个请求到来之间 --&amp;gt; &amp;lt;load-on-startup&amp;gt;1&amp;lt;/load-on-startup&amp;gt; &amp;lt;/servlet&amp;gt;   编写 配置类WebMvcConfig类， 如下：  //WebMvcConfig.java @Configuration //这是一个配置类 @ComponentScan({&amp;quot;com.hcedu.springdemo.controller&amp;quot;}) //指定扫描的包及其子包 @EnableWebMvc //启动WEB MVC 功能 (和 AOP, DT 一样，默认都是禁用的) public class WebMvcConfig extends WebMvcConfigurerAdapter { //继承WebMvc配置适配器类 //nothing! }  注：</description>
+    </item>
+    
+    <item>
+      <title>springMVC-2</title>
+      <link>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-2/</guid>
+      <description>SpringMVC框架 项目搭建流程  详见昨天笔记
+ 请求参数传递及编码问题  SpringMVC框架可以丰常方便地接收用户的请求参数，而且也可以帮助我们自动封装成相应的对象
+ SpringMVC支持如下方式来获取用户的请求参数  直接在方法中，添加相关的实体类对象[PO, pojo]或是值对象[VO, Value Object]【比较常用】  //示例代码
+@Controller public class UserController { @RequestMapping(&amp;quot;/user/register&amp;quot;) /***************** * 此处要求，页面表单项中的name属性值要和User对象的属性名保持一致，这个是约定 */ public String register(User user,Model model) { //...再做进一步的业务处理 } }   直接在方法中，添加单个表单项的参数【比较常用】  //示例代码
+@Controller public class UserController { @RequestMapping(&amp;quot;/user/register&amp;quot;) /***************** * 如果请求参数的名字与方法中的参数名不一样，我们有两种做法： * 1. 修改方法中的参数名与页面表单项中的name属性值一样 * 2. 使用 @RequestParam 注解来修饰方法参数，使得名字与页面表单项中的name属性值一样 */ public String login(String username, String pwd, Model model) { //...再做进一步的业务处理 } }   传统的代码，也就是原生的Servlet代码 【不可取，不建议使用】  //示例代码</description>
+    </item>
+    
+    <item>
+      <title>springboot配置</title>
       <link>https://tianhualiang2019.github.io/post/springboot%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -140,7 +160,7 @@ server: port: 8081 path: /hello  2、值的写法 字面量：普通的值（数
     </item>
     
     <item>
-      <title></title>
+      <title>拦截器、验证器的使用</title>
       <link>https://tianhualiang2019.github.io/post/springmvc-%E6%A1%86%E6%9E%B6-4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -156,32 +176,7 @@ server: port: 8081 path: /hello  2、值的写法 字面量：普通的值（数
     </item>
     
     <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/springmvc-1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/springmvc-1/</guid>
-      <description>SpringMVC框架 基本流程  基于maven构建一个WEB项目【直接使用现有的maven web项目模板】
- 在pom.xml中，加入spring mvc的依赖，它的名字：spring-webmvc
- 配置web.xml文件，这个文件的内容主要是配置SpringMVC前置控制器DispatcherServlet,如下：
-  &amp;lt;!-- spring mvc 主控制器 --&amp;gt; &amp;lt;servlet&amp;gt; &amp;lt;servlet-name&amp;gt;DispatcherServlet&amp;lt;/servlet-name&amp;gt; &amp;lt;servlet-class&amp;gt;org.springframework.web.servlet.DispatcherServlet&amp;lt;/servlet-class&amp;gt; &amp;lt;init-param&amp;gt; &amp;lt;param-name&amp;gt;contextClass&amp;lt;/param-name&amp;gt; &amp;lt;!-- 启动解注类来使用spring mvc的配置 --&amp;gt; &amp;lt;param-value&amp;gt;org.springframework.web.context.support.AnnotationConfigWebApplicationContext&amp;lt;/param-value&amp;gt; &amp;lt;/init-param&amp;gt; &amp;lt;init-param&amp;gt; &amp;lt;param-name&amp;gt;contextConfigLocation&amp;lt;/param-name&amp;gt; &amp;lt;!-- 告诉SpringMVC的前置控制器，我们的配置类在哪里，下面写的就是配置类的全限定名 --&amp;gt; &amp;lt;param-value&amp;gt;com.hcedu.springdemo.config.WebMvcConfig&amp;lt;/param-value&amp;gt; &amp;lt;/init-param&amp;gt; &amp;lt;!-- 表示此Servlet中容器启动时，就初始化，不用等到第一个请求到来之间 --&amp;gt; &amp;lt;load-on-startup&amp;gt;1&amp;lt;/load-on-startup&amp;gt; &amp;lt;/servlet&amp;gt;   编写 配置类WebMvcConfig类， 如下：  //WebMvcConfig.java @Configuration //这是一个配置类 @ComponentScan({&amp;quot;com.hcedu.springdemo.controller&amp;quot;}) //指定扫描的包及其子包 @EnableWebMvc //启动WEB MVC 功能 (和 AOP, DT 一样，默认都是禁用的) public class WebMvcConfig extends WebMvcConfigurerAdapter { //继承WebMvc配置适配器类 //nothing! }  注：</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-2/</guid>
-      <description>SpringMVC框架 项目搭建流程  详见昨天笔记
- 请求参数传递及编码问题  SpringMVC框架可以丰常方便地接收用户的请求参数，而且也可以帮助我们自动封装成相应的对象
- SpringMVC支持如下方式来获取用户的请求参数  直接在方法中，添加相关的实体类对象[PO, pojo]或是值对象[VO, Value Object]【比较常用】  //示例代码
-@Controller public class UserController { @RequestMapping(&amp;quot;/user/register&amp;quot;) /***************** * 此处要求，页面表单项中的name属性值要和User对象的属性名保持一致，这个是约定 */ public String register(User user,Model model) { //...再做进一步的业务处理 } }   直接在方法中，添加单个表单项的参数【比较常用】  //示例代码
-@Controller public class UserController { @RequestMapping(&amp;quot;/user/register&amp;quot;) /***************** * 如果请求参数的名字与方法中的参数名不一样，我们有两种做法： * 1. 修改方法中的参数名与页面表单项中的name属性值一样 * 2. 使用 @RequestParam 注解来修饰方法参数，使得名字与页面表单项中的name属性值一样 */ public String login(String username, String pwd, Model model) { //...再做进一步的业务处理 } }   传统的代码，也就是原生的Servlet代码 【不可取，不建议使用】  //示例代码</description>
-    </item>
-    
-    <item>
-      <title></title>
+      <title>配置步骤</title>
       <link>https://tianhualiang2019.github.io/post/springmvc%E6%A1%86%E6%9E%B6-3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -195,18 +190,6 @@ server: port: 8081 path: /hello  2、值的写法 字面量：普通的值（数
 而文件类型的数据是以二进制流的形式传递的
 回忆一下表单中的属性：
 &amp;gt; ... &amp;gt; &amp;lt;form name=&amp;quot;表单名&amp;quot; action=&amp;quot;服务端资源名&amp;quot; method=&amp;quot;get|post&amp;quot; &amp;gt; enctype=&amp;quot;application/x-www-form-urlencoded&amp;quot;&amp;gt; &amp;gt; &amp;lt;input type=&amp;quot;xxxx&amp;quot; /&amp;gt; &amp;gt; ... &amp;gt; &amp;lt;/form&amp;gt; &amp;gt; ``` &amp;gt; &amp;gt; 注： &amp;gt; &amp;gt; enctype属性指定表单数据编码格式，默认是 application/x-www-form-urlencoded &amp;gt; &amp;gt; 如果你要做文件的上传，则这个表单要满足两个条件 &amp;gt; &amp;gt; 1.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://tianhualiang2019.github.io/post/spring-validation/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://tianhualiang2019.github.io/post/spring-validation/</guid>
-      <description>Spring Validation JSR-303 简介 JSR-303 是 JavaEE 6 中的一项子规范，叫做 Bean Validation，官方参考实现是 Hibernate Validator。
-此实现与 Hibernate ORM 没有任何关系。JSR-303 用于对 Java Bean 中的字段的值进行验证。 Spring MVC 3.x 之中也大力支持 JSR-303，可以在控制器中使用注解的方式对表单提交的数据方便地验证。
-Spring 4.0 开始支持 Bean Validation 功能。
-JSR-303 基本的校验规则 空检查  @Null 验证对象是否为 null @NotNull 验证对象是否不为 null, 无法查检长度为 0 的字符串 @NotBlank 检查约束字符串是不是 Null 还有被 Trim 的长度是否大于 0,只对字符串,且会去掉前后空格 @NotEmpty 检查约束元素是否为 NULL 或者是 EMPTY  布尔检查  @AssertTrue 验证 Boolean 对象是否为 true @AssertFalse 验证 Boolean 对象是否为 false  长度检查  @Size(min=, max=) 验证对象（Array, Collection , Map, String）长度是否在给定的范围之内 @Length(min=, max=) 验证字符串长度介于 min 和 max 之间  日期检查  @Past 验证 Date 和 Calendar 对象是否在当前时间之前，验证成立的话被注释的元素一定是一个过去的日期 @Future 验证 Date 和 Calendar 对象是否在当前时间之后 ，验证成立的话被注释的元素一定是一个将来的日期  正则检查  @Pattern 验证 String 对象是否符合正则表达式的规则，被注释的元素符合制定的正则表达式 regexp：正则表达式 flags：指定 Pattern.</description>
     </item>
     
   </channel>

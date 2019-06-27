@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title> // Ray的个人博客</title>
+    <title>springMVC-1 // Ray的个人博客</title>
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.55.6" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,13 +11,13 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
+<meta name="twitter:title" content="springMVC-1"/>
 <meta name="twitter:description" content="SpringMVC框架 基本流程  基于maven构建一个WEB项目【直接使用现有的maven web项目模板】
  在pom.xml中，加入spring mvc的依赖，它的名字：spring-webmvc
  配置web.xml文件，这个文件的内容主要是配置SpringMVC前置控制器DispatcherServlet,如下：
   &lt;!-- spring mvc 主控制器 --&gt; &lt;servlet&gt; &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt; &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt; &lt;init-param&gt; &lt;param-name&gt;contextClass&lt;/param-name&gt; &lt;!-- 启动解注类来使用spring mvc的配置 --&gt; &lt;param-value&gt;org.springframework.web.context.support.AnnotationConfigWebApplicationContext&lt;/param-value&gt; &lt;/init-param&gt; &lt;init-param&gt; &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt; &lt;!-- 告诉SpringMVC的前置控制器，我们的配置类在哪里，下面写的就是配置类的全限定名 --&gt; &lt;param-value&gt;com.hcedu.springdemo.config.WebMvcConfig&lt;/param-value&gt; &lt;/init-param&gt; &lt;!-- 表示此Servlet中容器启动时，就初始化，不用等到第一个请求到来之间 --&gt; &lt;load-on-startup&gt;1&lt;/load-on-startup&gt; &lt;/servlet&gt;   编写 配置类WebMvcConfig类， 如下：  //WebMvcConfig.java @Configuration //这是一个配置类 @ComponentScan({&quot;com.hcedu.springdemo.controller&quot;}) //指定扫描的包及其子包 @EnableWebMvc //启动WEB MVC 功能 (和 AOP, DT 一样，默认都是禁用的) public class WebMvcConfig extends WebMvcConfigurerAdapter { //继承WebMvc配置适配器类 //nothing! }  注："/>
 
-    <meta property="og:title" content="" />
+    <meta property="og:title" content="springMVC-1" />
 <meta property="og:description" content="SpringMVC框架 基本流程  基于maven构建一个WEB项目【直接使用现有的maven web项目模板】
  在pom.xml中，加入spring mvc的依赖，它的名字：spring-webmvc
  配置web.xml文件，这个文件的内容主要是配置SpringMVC前置控制器DispatcherServlet,如下：
@@ -61,7 +61,7 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title"></h1>
+      <h1 class ="post-title">springMVC-1</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
